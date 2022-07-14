@@ -2,7 +2,7 @@ import requests
 from bs4 import BeautifulSoup
 # import time
 # import json
-
+import re
 url = "https://www.theidioms.com/list/#title"
 r = requests.get(url)
 # time.sleep(1.5)
@@ -32,19 +32,23 @@ for link in links_set:
     soup = BeautifulSoup(r.text, "html.parser")
     idiom_info = soup.find("div", {"class": "article"})
     idiom_content_tmp = []
+    idiom_content_without_tags = []
     for i in idiom_info.children:
-        if "Origin" in i or "Figures of Speech" in i:
+        if "Origin" in i:
             pass
-        # for tag in soup.find_all(re.compile("ol")):
-        #     idiom_content_tmp.append(tag.string)
-        # elif "<ul>" in i or "<li>" in i:
-        #     idiom_content_tmp.append(i)
         else:
             idiom_content_tmp.append(i)
-    idiom_content[idiom_content_tmp[0]] = {idiom_content_tmp[1]: idiom_content_tmp[2]}
+    for item in idiom_content_tmp:
+        bar = re.sub("<[^>]*>", "", str(item))
+        idiom_content_without_tags.append(bar)
+    print(idiom_content_without_tags)
+    idiom_content[idiom_content_without_tags[0]] = {idiom_content_without_tags[1]: idiom_content_without_tags[2]}
     idiom_examples[idiom_content_tmp[0]] = {idiom_content_tmp[3]: idiom_content_tmp[4]}
+
+
 print(idiom_content)
 print(idiom_examples)
+
 
 
 # with open("data/info.json", "a") as file:
