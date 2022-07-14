@@ -34,7 +34,7 @@ for link in links_set:
     idiom_content_tmp = []
     idiom_content_without_tags = []
     for i in idiom_info.children:
-        if "Origin" in i:
+        if "Origin" in i or "Figure of speech" in i:
             break
         else:
             idiom_content_tmp.append(i)
