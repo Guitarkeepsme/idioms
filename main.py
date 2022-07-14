@@ -35,7 +35,7 @@ for link in links_set:
     idiom_content_without_tags = []
     for i in idiom_info.children:
         if "Origin" in i:
-            pass
+            break
         else:
             idiom_content_tmp.append(i)
     for item in idiom_content_tmp:
@@ -43,7 +43,7 @@ for link in links_set:
         idiom_content_without_tags.append(bar)
     print(idiom_content_without_tags)
     idiom_content[idiom_content_without_tags[0]] = {idiom_content_without_tags[1]: idiom_content_without_tags[2]}
-    idiom_examples[idiom_content_tmp[0]] = {idiom_content_tmp[3]: idiom_content_tmp[4]}
+    idiom_examples[idiom_content_without_tags[0]] = {idiom_content_without_tags[3]: idiom_content_without_tags[4]}
 
 
 print(idiom_content)
