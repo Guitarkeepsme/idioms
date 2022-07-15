@@ -1,17 +1,9 @@
-import re
+import requests
+from bs4 import BeautifulSoup
 
-Foo = ["KeyboardEvent(enter up)", "KeyboardEvent(h down)", "KeyboardEvent(h up)"]
-Foo1 = ["<p><strong>sell like hot cakes</strong></p>", "<h2>Meaning</h2>", "<ul><li>be a great commercial success</li><li>to dispose </li>"]
-
-strList = []
-
-for item in Foo1:
-    bar = re.sub("<[^>]*>", "", str(item))
-    strList.append(bar)
-
-
-# for item in Foo1:
-#     bar = re.sub('KeyboardEvent(\(.*?)', '', str(item))
-#     bar = re.sub('\)', '', bar)
-#     strList.append(bar)
-print(strList)
+for page_number in range(13, 15):
+    url = "https://www.theidioms.com/list/"
+    r = requests.get(url + f"page/{page_number}/")
+    soup = BeautifulSoup(r.text, "html.parser")
+    idiom_url = soup.find('div', class_='new-list').find('a')
+    print(idiom_url)
