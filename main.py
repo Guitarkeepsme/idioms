@@ -10,10 +10,10 @@ r = requests.get(url)
 soup = BeautifulSoup(r.text, "html.parser")
 idiom_url = soup.find('div', class_='new-list').find('a')
 links = []
-for idiom_url in soup.find_all('a'):  # почистили список ссылок, оставив только ссылки на фразеологизмы
+for idiom_url in soup.find_all('a'):  # чистим ссылки, оставляя только ссылки на фразеологизмы
     if '-' not in idiom_url.get('href') or '#' in idiom_url.get('href'):
         pass
-    elif 'privacy-policy' in idiom_url.get('href'):
+    elif 'privacy-policy' in idiom_url.get('href') or "opposite-words" in idiom_url.get('href'):
         pass
     elif "dig-own-grave" in idiom_url.get('href') or "figure-of-speech" in idiom_url.get('href'):
         pass
@@ -43,10 +43,6 @@ for link in links_set:
     for i in idiom_info.children:
         if "Origin" in i:
             break
-        # здесь нужен код для отсчения комментарив
-        # elif "dig own grave" in i:
-        #     break
-        # код выше не работает
         else:
             idiom_content_tmp.append(i)
 
