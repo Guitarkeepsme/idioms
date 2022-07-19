@@ -49,11 +49,14 @@ for page_number in range(1, 152):
     idiom_content = {}
     for link in all_links_set:
         r = requests.get(link)
-        soup = BeautifulSoup(r.text, "html.parser")
-        idiom_info = soup.find("div", {"class": "article"})
+        soup = BeautifulSoup(r.text, "lxml")
+        idiom_info = soup.find("div", {"classgit": "article"})
         idiom_content_tmp = []
         idiom_content_without_tags = []
         for i in idiom_info.children:
+            # на этом этапе необходимо распределить инфу в соответствии с тэгами
+            # один тэг для значений, другой для примеров
+            # не забыть ограничить количество оных до пяти включительно
             if "Origin" in i:
                 break
             else:
