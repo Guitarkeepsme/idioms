@@ -5,7 +5,6 @@ import json
 # import re
 # import time
 # import random
-import os
 headers = {
     "user-agent": \
           "Mozilla / 5.0(Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"+\
@@ -20,23 +19,9 @@ for page_number in range(1, 4):
     # time.sleep(random.randrange(1, 3))
     folder_name = f"data/data_{page_number}"
 
-    if os.path.exists(folder_name):
-        print("Папка уже существует!")
-    else:
-         os.mkdir(folder_name)
-
-    with open(f"{folder_name}/projects_{page_number}.html", "w") as file:
-        file.write(r.text)
-
-    with open(f"{folder_name}/projects_{page_number}.html") as file:
-        src = file.read()
-
     soup = BeautifulSoup(src, "xml")
     idiom_url = soup.find_all
     links = []
-
-    # with open("data/links.json", "w") as file:
-    #     json.dump(all_links, file, indent=4, ensure_ascii=False)
 
     for idiom_url in idiom_url('a'):  # чистим ссылки, оставляя только ссылки на фразеологизмы
         if '-' not in idiom_url.get('href') or '#' in idiom_url.get('href'):
