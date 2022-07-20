@@ -53,28 +53,19 @@ for page_number in range(1, 152):
         for phrase in meanings_soup:
             bar = str(phrase).replace("</li>", ";")  # replace("<strong>", "**").replace("</strong>", "**")
             with_n_bar = re.sub("<[^>]*>", " ", unicodedata.normalize("NFKD", bar))
-            meanings.append(with_n_bar.replace("   ", " ").replace("  ", " ").replace(".", ""))
+            meanings.append(with_n_bar.strip().replace("  ", " ").replace(".", ""))
             meanings_counter += 1
             if meanings_counter == 5:
                 break
         for example in sentences_soup:
             bar = str(example).replace("</li>", "")  # replace("<strong>", "**").replace("</strong>", "**")
             with_n_bar = re.sub("<[^>]*>", " ", unicodedata.normalize("NFKD", bar))
-            sentences.append(with_n_bar.replace("   ", " ").replace("  ", " "))
+            sentences.append(with_n_bar.strip().replace("   ", " ").replace("  ", " "))
             sentences_counter += 1
             if sentences_counter == 5:
                 break
-        meanings_str = ''.join(meanings).strip()
-        sentences_str = ''.join(sentences).strip()
-        # for i in idiom_info:
-        #     # на этом этапе необходимо распределить инфу в соответствии с тэгами
-        #     # один тэг для значений, другой для примеров
-        #     # не забыть ограничить количество оных до пяти включительно
-        #     if "Origin" in i:
-        #         break
-        #     else:
-        #         idiom_content_tmp.append(i)
-        # print(meanings)
+        meanings_str = ''.join(meanings)
+        sentences_str = ''.join(sentences)
     #     for item in idiom_content_tmp:
     #         bar = str(item).replace("</li>", "\n")  # replace("<strong>", "**").replace("</strong>", "**")
     #         with_n_bar = re.sub("<[^>]*>", " ", unicodedata.normalize("NFKD", bar))
@@ -93,4 +84,4 @@ for page_number in range(1, 152):
     iteration_count -= 1
     print(f"Обход №{page_number} завершён, осталось обходов: {iteration_count}")
     if iteration_count == 0:
-        print("Сбор данных завершен")
+        print("Сбор данных завершен!")
