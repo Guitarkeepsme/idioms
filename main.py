@@ -47,8 +47,8 @@ for page_number in range(1, 2):
                 if meanings_counter == 5:
                     break
             for example in sentences_soup:
-                bar = str(example).replace("</li>", "")
-                with_n_bar = re.sub("<[^>]*>", " ", unicodedata.normalize("NFKD", bar))
+                bar = str(example).replace("</li>", "END_LINE")
+                with_n_bar = re.sub("<[^>]*>", "", unicodedata.normalize("NFKD", bar))
                 sentences.append(with_n_bar.strip().replace("   ", " ").replace("  ", " "))
                 sentences_counter += 1
                 if sentences_counter == 5:
