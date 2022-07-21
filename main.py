@@ -8,7 +8,7 @@ all_links = []
 iteration_count = 152
 print(f"Всего обходов: {iteration_count}")
 
-for page_number in range(1, 2):
+for page_number in range(1, 15):
     url = "https://www.theidioms.com/list"
     r = requests.get(url + f"/page/{page_number}/")
 
@@ -48,6 +48,7 @@ for page_number in range(1, 2):
                     break
             for example in sentences_soup:
                 bar = str(example).replace("</li>", "END_LINE")
+                # .replace("<strong>", "BOLD").replace("</strong>", "BOLD")
                 with_n_bar = re.sub("<[^>]*>", "", unicodedata.normalize("NFKD", bar))
                 sentences.append(with_n_bar.strip().replace("   ", " ").replace("  ", " "))
                 sentences_counter += 1

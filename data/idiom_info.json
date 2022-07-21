@@ -1,97 +1,167 @@
 {
-    "bone to pick": {
-        "idiom_name": "bone to pick",
-        "idiom_meaning": "having a complaint that needs to be discussedEND_LINEsomething to argue about, a matter to discussEND_LINEan unpleasant issue that needs discussionEND_LINEa person has an issue with another individual, that must be addressed or resolvedEND_LINEtwo people are literally fighting over an object, an idea, a grievance, or another personEND_LINE",
-        "idiom_examples": "Jake walked up to Robert and told him that he had a bone to pick with him.END_LINEFrank was the first one to pick a bone with Johnny, explaining that he was always wrong.END_LINECatrina decided to send Jill a DM telling her that she was about to pick some bones with her.END_LINERuth was hesitant. She didn’t want to pick a bone with a random guy she’d never met.END_LINEAlderman Masterson had a bone to pick with his constituents. They were making unrealistic demands for him to resolve all of the issues within their community.END_LINE"
+    "bosom friend": {
+        "idiom_name": "bosom friend",
+        "idiom_meaning": "best friend who is very close to youEND_LINEsomeone whom you share everything withEND_LINEsomeone you can always rely onEND_LINEclose friends who share confidencesEND_LINEa kindred spiritEND_LINE",
+        "idiom_examples": "The two ladies who were arrested for injuring each other for one man were bosom friends for years.END_LINEI wouldn’t call him a bosom friend, since we aren’t that close.END_LINEShe’s been my bosom friend since we were kids.END_LINEEveryone saw them as bosom friends, so it was a surprise when they had a falling out.END_LINEAnyone should be able to see their partner as their bosom friend.END_LINE"
     },
-    "come to grief": {
-        "idiom_name": "come to grief",
-        "idiom_meaning": "to have an accident or suffer disasterEND_LINEthe failure of somethingEND_LINEto experience misfortune or failureEND_LINEto end in disasterEND_LINEto be destroyed and ruinedEND_LINE",
-        "idiom_examples": "Their relationship came to grief following their disastrous vacation.END_LINEHis attempts at creating a business came to grief following a bad investment.END_LINEThe ship and its crew came to grief after running aground several miles offshore.END_LINEHer entire family felt that she would come to grief if she pushed the idea of marriage too quickly.END_LINEIt would be a great pity to see all that sincere work come to grief.END_LINE"
+    "smack dab": {
+        "idiom_name": "smack dab",
+        "idiom_meaning": "exactlyEND_LINEpreciselyEND_LINEright in place or timeEND_LINEsquarelyEND_LINE",
+        "idiom_examples": "We got our water balloons fully filled and threw smack dab at their heads. It was fun, I tell you!END_LINEI accidentally lost my balance while stepping back and my elbow landed smack dab on her ribs.END_LINEHe was trying to hold me down, that molester. That’s when I got him off balance and punched him smack dab at his nose.END_LINEI want to own a farmhouse smack dab in the middle of woods near the city.END_LINEJohn accidentally elbowed me smack dab on my nose. The bleeding doesn’t stop, no matter what all I tried.END_LINE"
     },
-    "make a clean breast": {
-        "idiom_name": "make a clean breast",
-        "idiom_meaning": "to tell the truth about somethingEND_LINEspeak openly and honestly about something (especially if it was kept a secret or has been lied about in the past)END_LINEadmitting and confessingEND_LINEto make a confession or to tell the truth about something you feel guilty aboutEND_LINE",
-        "idiom_examples": "Sharon made a clean breast of it and threw Ashley under the bus.END_LINEHe finally decided to make a clean breast of it and admitted to robbing the priest.END_LINEAfter a thorough interrogation, she made a clean breast of it and exposed the real culprit.END_LINEThe footballer made a clean breast to his coach on the drug use claims.END_LINEJohn eventually made a clean breast of it and admitted to copying the assignment.END_LINE"
+    "stand a chance": {
+        "idiom_name": "stand a chance",
+        "idiom_meaning": "to have a possibility of succeeding, even if a remote oneEND_LINEto be possible to be able to do somethingEND_LINEto have a hope of successEND_LINEto have a possibility or a hope of successEND_LINE",
+        "idiom_examples": "Do you believe that you stand a chance of getting that job?END_LINEHis team doesn’t stand a chance of taking the title.END_LINEI think you should try for a date with her, if you think you stand a chance.END_LINEWith this traffic, we don’t stand a chance of getting there before dark.END_LINEIf funding by the government is withdrawn, small minority schools in the remote northern area, don’t stand a chance.END_LINE"
     },
-    "buy the farm": {
-        "idiom_name": "buy the farm",
-        "idiom_meaning": "to dieEND_LINEto pass awayEND_LINEdepart from the worldEND_LINElose life all of a suddenEND_LINEmeet the deathEND_LINE",
-        "idiom_examples": "Mister Jack was really ill from the past two months and yesterday he bought the farm.END_LINESara is just eighteen years old, too young to buy the farm.END_LINEDon’t worry! John will survive this heart attack, he won’t buy the farm.END_LINEMichal lived for a few days after her collapse and then she bought the farm.END_LINEI really want to visit New Zealand once, before I buy the farm.END_LINE"
+    "living on borrowed time": {
+        "idiom_name": "living on borrowed time",
+        "idiom_meaning": "not expected to live much longerEND_LINEto live after a point where it can be reasonably expected that you may have diedEND_LINEto remain in a situation that no one really expected you to END_LINE",
+        "idiom_examples": "He was told he only had three months left to live, so he is living on borrowed time now that it is four months later.END_LINEHis boss has not been happy with his performance for months. He is really living on borrowed time after this latest incident.END_LINEThe big Hollywood star is suffering from a serious illness and is now living on borrowed time.END_LINE"
+    },
+    "beau monde": {
+        "idiom_name": "beau monde",
+        "idiom_meaning": "a fashionable societyEND_LINEa rich societyEND_LINEa class of people who are particularly wealthy and glamorous END_LINE",
+        "idiom_examples": "He had no interest in the glittering beau monde that he belonged to before his marriage.END_LINEThe beau monde has always been admired by the general public.END_LINEA little beau monde seems to have rapidly developed over the course of the year right here in this city.END_LINEDid you see that there was a seasoning named after Beau Monde? I’ve got to get my hands on it.END_LINEWhen she grows up, she’s going to be an icon in the beau monde.END_LINE"
+    },
+    "do ones bit": {
+        "idiom_name": "do ones bit",
+        "idiom_meaning": "to do a share of a taskEND_LINEto make an individual contribution to an overall effortEND_LINEto make a small but expected contribution to a larger goalEND_LINEto share in a small part of a responsibility to achieve something importantEND_LINE",
+        "idiom_examples": "When people can “do their bit“, they are helping support a larger cause.END_LINEWe can achieve more together when each person can do their bit.END_LINEThe local blood bank called on everyone to do their bit by donating blood on Friday.END_LINEIf survival is a serious matter, everyone must do their bit.END_LINEShe always tries to do her bit to make the world a better place.END_LINE"
+    },
+    "birds of a feather": {
+        "idiom_name": "birds of a feather",
+        "idiom_meaning": "people with similar tastes, interests, and backgroundsEND_LINEpeople with the same characteristicsEND_LINEpeople who relate to others and feel safe around themEND_LINEpeople with a shared interestEND_LINEpeople with shared valuesEND_LINE",
+        "idiom_examples": "Ethan saw Jason had the same type of car and shrugged, “Birds of a feather.”END_LINEKara and Carly laughed when they saw each other wearing the same outfit and said, “Birds of a feather.”END_LINE“Erica, you and I are birds of a feather,” said Tammy.END_LINEAccording to the surprising finding of the report, there is no guarantee that people who are birds of a feather will prove to be good life partners.END_LINE"
+    },
+    "body and soul": {
+        "idiom_name": "body and soul",
+        "idiom_meaning": "with all one’s effort and abilityEND_LINEcompletelyEND_LINEwith all ofEND_LINEevery effortEND_LINEall aspectsEND_LINE",
+        "idiom_examples": "A great painter must put their body and soul onto the canvas.END_LINEWhen two people become married, they are giving their body and soul to one another. END_LINEWith her body and soul into her career, she quickly rose to the top.END_LINEHe dedicated himself to science studies and astronomy, body and soul.END_LINE"
     },
     "on the line": {
         "idiom_name": "on the line",
         "idiom_meaning": "to be at serious riskEND_LINEdenoting the fact that something is being riskedEND_LINEline up in formation (military, sports, etc)END_LINEa gambling term that can be applied to a variety of games of chanceEND_LINE",
         "idiom_examples": "Put your toes on the line and form up!END_LINEI’m going to risk it and put it all on the line.END_LINEBy making this investment, he’s putting everything on the line.END_LINEOpen-pen fish farms are on the line along the west coasts of both Canada and the United States.END_LINEMichigan’s future is on the line as a result of the rising violence.END_LINE"
     },
-    "break a leg": {
-        "idiom_name": "break a leg",
-        "idiom_meaning": "good luckEND_LINEbest wishesEND_LINEstroke of luckEND_LINEto wish someone luck especially before a performanceEND_LINE",
-        "idiom_examples": "“Break a leg!” shouted the stage director to his actors before the beginning of the play.END_LINEYou have an exam tomorrow? Break a leg!END_LINE“My first stage performance is scheduled for tonight.” “Well, break a leg!”END_LINE“Break a leg!” I shouted out to him before he rushed in for his auditions.END_LINEWhen the team went out for the final race, the coach shouted out to them “break a leg!”END_LINE"
+    "famous last words": {
+        "idiom_name": "famous last words",
+        "idiom_meaning": "a comment or a prophecy that is expected to be proved incorrectEND_LINEdeclaration that is promptly counteractedEND_LINEa speech or claim that is rapidly contradictedEND_LINE",
+        "idiom_examples": "I was thinking that I will not have dinner today. Famous last words, I am very hungry.END_LINEI replied Jack’s friendship proposal as “I hate you!” Famous last words! Then only after few weeks I fell in love with him.END_LINEI think it’s not raining and we can go out playing today. Famous last words! Once look outside in window.END_LINEI will never shout on you, promise! ... Huh? .” Famous last words! You are still shouting and just shut up.END_LINEI swore in the morning that I would not drink anymore. My famous last words.END_LINE"
+    },
+    "over the top": {
+        "idiom_name": "over the top",
+        "idiom_meaning": "excessive, exaggeratedEND_LINEtoo extreme, overdoneEND_LINEbeyond normal, acceptable or reasonable limitsEND_LINE",
+        "idiom_examples": "The politician was over the top with his speech. Everything he said was exaggerated.END_LINEThe company had gone over the top with its projections of growth in the current year.END_LINEThe arrangements for the party was way over the top.END_LINEHe went over the top with the numbers in his report.END_LINEHe has a habit if going over the top whenever he is out with his friends.END_LINE"
+    },
+    "by and by": {
+        "idiom_name": "by and by",
+        "idiom_meaning": "soon; after a whileEND_LINElater; in due courseEND_LINEas time passesEND_LINEbefore longEND_LINEeventuallyEND_LINE",
+        "idiom_examples": "By and by, she paused to make sure everyone was paying attention.END_LINEThe taxi ride to the airport seemed to go on forever, but by and by, we arrived.END_LINEBy and by, I grew accustomed to the new house.END_LINEHe’ll come for a visit by and by.END_LINEBy and by, the rain stopped, and the sun began to shine again.END_LINE"
+    },
+    "bring someone to book": {
+        "idiom_name": "bring someone to book",
+        "idiom_meaning": "make somebody accountable for their conductEND_LINEto punish someoneEND_LINElegally punish or summon someone to account for their actionsEND_LINE",
+        "idiom_examples": "If Jessica continues with this behavior, I will have no choice but to bring her to book.END_LINEEthan stole that boy’s bike. Bringing him to book is the only option to make him understand his actions are wrong.END_LINEI will bring that man to book for the crime he has committed.END_LINEBringing Joshua to book for bullying that child on the playground is the only solution to help him understand his actions are unacceptable.END_LINEIt was frustrating for the victims’ kin as the police and court failed to bring anyone to book for the crime.END_LINE"
+    },
+    "between the devil and the deep blue sea": {
+        "idiom_name": "between the devil and the deep blue sea",
+        "idiom_meaning": "between two equally difficult or unacceptable choicesEND_LINEa person is stuck between two bad choicesEND_LINEa person must do wrong or accept a loss no matter what they doEND_LINE",
+        "idiom_examples": "I am in a pickle. Anything I do is going to cause this situation to turn out bad. I’m really stuck between the devil and the deep blue sea.END_LINENo matter what I do, I’m going to end up losing my job. If I tell my boss, they will fire me. If I don’t say anything, they will eventually find out and I could face jail time. I’m literally stuck between the devil and the deep blue sea.END_LINELook, we have to get out of these woods because the wildfire will eventually kill us all. However, we can only get to safety by going through the Devil’s Gate. We are truly stuck between the devil and the deep blue sea.END_LINETrying to please both his boss and his wife puts him between the devil and the deep blue sea.END_LINE"
+    },
+    "class act": {
+        "idiom_name": "class act",
+        "idiom_meaning": "high-quality performance or display; additionally, the performerEND_LINEone who possesses a high degree of skill, ability, or styleEND_LINEhigh-quality performance or actionEND_LINEan exemplary method of doing any given taskEND_LINE(Sarcasm) Insisting that a person is overzealously performing an actionEND_LINE",
+        "idiom_examples": "LeBron James has truly been a class act in basketball long before he entered the NBA.END_LINETeresa received a well-deserved promotion after exhibiting class act knowledge of the industry.END_LINEThe film drama show hailed as a class act failed to become a great hit.END_LINE(Sarcasm) “The new guy is a real class act. We’ll see how long he can keep it up.”END_LINE"
+    },
+    "ballpark figure": {
+        "idiom_name": "ballpark figure",
+        "idiom_meaning": "to be near about the exact (usually in amount)END_LINEan estimate of what the actual figure will be likeEND_LINE",
+        "idiom_examples": "The management was given a ballpark figure at the very beginning of the presentation.END_LINEShe manages to give her father a ballpark amount that she would need every week.END_LINEI have donated this ballpark figure to the children’s aid this morning.END_LINEEven a ballpark figure to this number is going to hurt our overall numbers very badly this quarter.END_LINEI save a ballpark figure of 20% from my salary every month as something for the rainy day.END_LINE"
+    },
+    "on top of the world": {
+        "idiom_name": "on top of the world",
+        "idiom_meaning": "in a good mood as everything is going well for youEND_LINEfeeling happy and delightedEND_LINEfeeling wonderfulEND_LINEfeeling ecstaticEND_LINE",
+        "idiom_examples": "He was on top of the world after he won the World Marathon Championships.END_LINEHe was on top of the world after she agreed to marry him.END_LINEOnce she secured her new job opportunity in the hospitality industry, she could not hide it as she felt on top of the world.END_LINEAfter her favorite football team won the finals, she felt on top of the world.END_LINEAfter the final results came out, we felt on top of the world for making it.END_LINE"
+    },
+    "at cross purposes": {
+        "idiom_name": "at cross purposes",
+        "idiom_meaning": "With aims or goals that conflict or interfere with one anotherEND_LINEBeing at cross-purposes means a confusion that arises by thinking you’re both talking about the same thing but both of you are actually discussing different, but kind of related, thingsEND_LINEAlso means failure or confusion because of talking or working towards different objectives thinking they’re the sameEND_LINEIt also means a contrasting or opposing purposeEND_LINE",
+        "idiom_examples": "It will be difficult for us to be successful if we continue working at cross-purposes.END_LINEYesterday, we were at cross-purposes with Steve. We had a conversation about Georgia, only to realize later that I was talking about Georgia in Russia but he was talking about Georgia in the U.S.END_LINESam and I were at cross purposes the other day. We had a talk about Kevin, but I was talking about Kevin my brother, but he thought we were talking about our mutual friend also called Kevin.END_LINEToday I was discussing football matters with an Asian friend, but we were at cross-purposes. All the while, I was discussing American football, but he thought I was talking about soccer.END_LINEThe members of Lord’s House fear the two government departments are working at cross purposes.END_LINE"
     },
     "its a small world": {
         "idiom_name": "its a small world",
         "idiom_meaning": "meeting someone not expected to be at a certain placeEND_LINEencountering the same people, events, or situations in an unexpected placeEND_LINEsomeone knows a person you knowEND_LINEused to express surprise that events or people at different places are somehow connectedEND_LINEa water-based boat ride located in the Fantasyland area at the various Walt Disney Parks and Resorts worldwideEND_LINE",
         "idiom_examples": "I had no contact with him since school, and I bumped into him at a friend’s party! It’s a small world.END_LINEMy old English teacher is your aunt? Well, it’s a small world indeed!END_LINEFancy running into you here. I thought I would never see you again! It’s a small world.END_LINEDo you know my friend from school? Wow, it’s a small world, isn’t it?END_LINEImagine meeting her at the theater last night. It’s a small world.END_LINE"
     },
-    "a quick buck": {
-        "idiom_name": "a quick buck",
-        "idiom_meaning": "to make money quicklyEND_LINEto make money in a dishonest mannerEND_LINEto earn money quickly and fast, usually in an unethical wayEND_LINEto earn an amount of money by completing a favour for another individualEND_LINEan offer to help someone make money quickly for taking on a jobEND_LINE",
-        "idiom_examples": "He decided to make a quick buck by selling his CD collection.END_LINEIt was a fast buck scheme that ended up costing people a lot of money.END_LINEMaking a quick buck can help people to pay their bills when they need to.END_LINEPeople will look to make a fast buck when they need something.END_LINEJack is trying to make a fast buck by selling burgers on a busy street.END_LINE"
+    "break the news": {
+        "idiom_name": "break the news",
+        "idiom_meaning": "to make something known to everybodyEND_LINEto tell someone the bad newsEND_LINEto inform someone of new, important informationEND_LINEto disclose new information publiclyEND_LINE",
+        "idiom_examples": "We are going to have to break the news to the kids that the concert has been cancelled.END_LINEI can’t wait to break the news to my family that I am having a baby!END_LINEThey just broke the news online that there was a mass shooting in Oregon.END_LINEIt was very hard to break the news of that catastrophic accident to the families of the victims.END_LINE"
     },
-    "been around": {
-        "idiom_name": "been around",
-        "idiom_meaning": "(existed) been present and activeEND_LINEto have gained worldly experienceEND_LINEto have seen or experienced several things in one’s lifeEND_LINEto describe life experiencesEND_LINEto denote that one is not easily fooledEND_LINE",
-        "idiom_examples": "This is not a new viral video; it’s been around for a couple of years.END_LINEThey have been around long enough to see a few things.END_LINEIf John had been around, he would not have allowed the loading of the ship due to bad weather.END_LINEYou can’t fool someone that has been around since the 60s.END_LINEI have been around long enough to learn a few valuable lessons.END_LINE"
+    "bury head in the sand": {
+        "idiom_name": "bury head in the sand",
+        "idiom_meaning": "hide from the truthEND_LINEintentional naivety END_LINEto play dumbEND_LINEto avoid circumstancesEND_LINEavert shameEND_LINE",
+        "idiom_examples": "Finals begin in a week and if I continue to bury my head in the sand, I’ll be taking this class again next semester.END_LINEThe couple knew that their relationship was deteriorating, but with their heads buried in the sand, they kept dragging it along.END_LINEA popular cheerleader at school let out a huge burp today during an assembly. She’ll probably bury her head in the sand for the rest of the year.END_LINEWhen our supervisor gathered us all and asked who the last person was to scan the incoming shipment, Brad had his head buried in the sand because he knew that meant he had done something wrong.END_LINEParents and the principal claimed that ragging was being ignored and accused the warden of burying her head in the sand.END_LINE"
     },
-    "cant judge a book by its cover": {
-        "idiom_name": "cant judge a book by its cover",
-        "idiom_meaning": "outward appearance cannot be an indicator of someone or something’s value or worthEND_LINEyou cannot know what someone or something is like just by looking the person or thing’s appearanceEND_LINEthe quality or character of someone or something cannot be judged just by looking at themEND_LINEan opinion of someone or something cannot be formed solely by seeing what’s on the surfaceEND_LINE",
-        "idiom_examples": "The candidate did not look very intelligent, but you can’t judge a book by its cover.END_LINEThe hotel looked attractive from outside, but the rooms were damp and not well maintained. You can’t judge a book by its cover!END_LINEDo not form opinions of a persons character by looking at his appearance. You can’t judge a book by its cover.END_LINEAt first we did not want to go into the restaurant as it looked small and cramped; but the food was delicious – we realized that you can’t judge a book by its cover.END_LINEThe car was small and looked unsuited for a long trip, but packed a lot of power and was very solid. You can’t judge a book by its cover.END_LINE"
+    "hang up": {
+        "idiom_name": "hang up",
+        "idiom_meaning": "to disconnect a phone call It is often used when someone does not want to continue a conversationEND_LINEsomething that prohibits someone from making progress in a situation It is hyphenated and used as a nounEND_LINEto give up on someone or somethingEND_LINEto be obsessed with someone or something, this is used very informallyEND_LINEto stop doing somethingEND_LINE",
+        "idiom_examples": "If you do not stop complaining then I will hang up on you.END_LINEDon’t you dare hang up until I have had a chance to ask my question!END_LINEJane has a lot of hang-ups about being an overweight child.END_LINEPeter has hung-ups about not being as educated as some of his peers.END_LINEWe had to hang up on them as they were just not able to do the job that we needed.END_LINE"
     },
-    "rain cats and dogs": {
-        "idiom_name": "rain cats and dogs",
-        "idiom_meaning": "too much heavy rainEND_LINEtorrential rainEND_LINEvery heavily rainingEND_LINEraining tremendouslyEND_LINE",
-        "idiom_examples": "It’s raining cats and dogs I am worried about how my kids will reach home.END_LINEIt rains cats and dogs when the Monsoon comes in India.END_LINEHow will you go to play Cricket today? It’s raining cats and dogs.END_LINEWhen we were returning from the picnic, it was raining cats and dogs.END_LINEI think it’s not safe to drive the car now – it’s raining cats and dogs.END_LINE"
+    "light of ones life": {
+        "idiom_name": "light of ones life",
+        "idiom_meaning": "someone who makes one very happyEND_LINEa soulmate to another personEND_LINEsomeone who brightens another’s lifeEND_LINEthe person one loves more than anyone elseEND_LINEsomeone that makes one’s life worth livingEND_LINE",
+        "idiom_examples": "Because he was there with him through everything, he saw him as the light of his life.END_LINEYou should see the person you marry as the light of your life.END_LINEIt was unfortunate that she was the light of his life, but she didn’t see him the same way.END_LINEWhen she was the only one to stay with her that night, she realized she was the light of her life.END_LINEIt might seem strange, but I see my cat as the light of my life.END_LINE"
     },
-    "sacred cow": {
-        "idiom_name": "sacred cow",
-        "idiom_meaning": "something that people believe or accept as true without questioning itEND_LINEbeing unreasonably immune from criticism or oppositionEND_LINEan institution, idea, or custom that is held to be above criticismEND_LINEsomething that people do not like to questionEND_LINEa taboo subjectEND_LINE",
-        "idiom_examples": "The journalist esteemed too many sacred cows.END_LINEThe old governmgent program has become a sacred cow.END_LINEChristianity is a sacred cow among many people.END_LINEThe priest was considered a sacred cow among his congregants.END_LINEThey couldn’t dare oppose the sacred cow of legislative democracy.END_LINE"
+    "busy as a beaver": {
+        "idiom_name": "busy as a beaver",
+        "idiom_meaning": "work very hard and activelyEND_LINEto be intensely engaged in methodical and diligent workEND_LINEa simile derived from the fact that beavers spend a significant amount of time felling trees and building their damsEND_LINEthe phrase can be contrasted with the related idiom, “busy as a bee,” which implies quick or rapid work However, in practice, both have come to simply mean actively workingEND_LINE",
+        "idiom_examples": "I often find my husband in the garage, busy as a beaver, working on some new project.END_LINEI have been busy as a beaver, working to complete my thesis prior to graduation.END_LINEAlthough they are clearly enjoying themselves, the children are as busy as beavers, constructing their pretend fort.END_LINEAhead of Christmas, she worked like a beaver to clean out all the closets.END_LINEMy dad has to work like a beaver to buy a new house.END_LINE"
     },
-    "look forward": {
-        "idiom_name": "look forward",
-        "idiom_meaning": "to eagerly await somethingEND_LINEto be excited about something that is going to happenEND_LINEthe term can also be used in its literal formEND_LINE",
-        "idiom_examples": "I am looking forward to seeing my best friend next weekend. I have not seen him for six months.END_LINEJane always looks forward to taking official tours.END_LINEWe are all looking forward to our holiday in Mauritius. We can’t wait to swim with the dolphins.END_LINEThey are looking forward to meeting up with their family over the weekend.END_LINEI am looking forward to the new Avengers movie that will be released soon.END_LINE"
+    "upper crust": {
+        "idiom_name": "upper crust",
+        "idiom_meaning": "the aristocracy and upper classes, informalEND_LINEthe highest social class or group; especially the highest circle of the upper classEND_LINE",
+        "idiom_examples": "Reservation system was developed to help the needy. Now it has become privilege for the society therefore even the upper crust are demanding reservation these days.END_LINEMany leaders brought reform in the country by giving equal rights to all citizens else it would have been a place of rule by the upper crust.END_LINEMany people who belong to the upper crust consider themselves special. Perhaps they’ve forgotten each being is equal in God’s eyes despite of their status on society.END_LINENot everyone from the upper crust looks towards others as low. Many people have broken the stereotype by uplifting the poor &amp; working for their well-being.END_LINEThough many countries are democratic which means equal rights for all yet it has been seen that the upper crust get added privilege in one way or the other.END_LINE"
     },
-    "sell like hot cakes": {
-        "idiom_name": "sell like hot cakes",
-        "idiom_meaning": "be a great commercial successEND_LINEto dispose of something very quickly and with little effortEND_LINEto sell or get rid of large quantities of something very easilyEND_LINE",
-        "idiom_examples": "These books are selling like hotcakes.END_LINEJohn says that the new cars are selling like hotcakes.END_LINEIt is very hot outside. These ice lollies will sell like hotcakes.END_LINEI am making cupcakes for the school fete. They always sell like hotcakes.END_LINEThe 2K model cars by BMW sold like hot cakes, and it was hard to produce them by company to fulfill the demands.END_LINE"
+    "pros and cons": {
+        "idiom_name": "pros and cons",
+        "idiom_meaning": "good points and bad pointsEND_LINEadvantages and disadvantagesEND_LINEthe favourable and unfavourable factors or reasonsEND_LINEarguments for and against somethingEND_LINE",
+        "idiom_examples": "There are pros and cons to having children.END_LINEI’m weighing the pros and cons of moving to another state.END_LINEThe pros and cons of using a laptop for work are debatable.END_LINEThe pros and cons of taking a day off work are clear.END_LINEThere are pros and cons to every decision we make in life.END_LINE"
     },
-    "the devil is beating his wife": {
-        "idiom_name": "the devil is beating his wife",
-        "idiom_meaning": "raining whereas the sun is shiningEND_LINEwhen the sun is shining yet it’s rainingEND_LINEwhen it’s raining but the sun is shining at the same timeEND_LINE",
-        "idiom_examples": "The sunshower is said to occur when the devil is beating his wife in various German-speaking countries.END_LINEToday, the devil is beating his wife in our city—it’s raining cats and dogs and the sun is also shining.END_LINEYesterday, I witnessed a very rare occurrence known as “the devil is beating his wife.”END_LINEPeople in the Southern United States usually come across a weird natural phenomenon called “the devil is beating his wife.”END_LINEEverybody laughed when a kid asked her mom, “Mamma, I want to see how the devil is beating his wife.”END_LINE"
+    "zero tolerance": {
+        "idiom_name": "zero tolerance",
+        "idiom_meaning": "denial to allow rebellious activities, usually by rigid and strict application of the rules;END_LINEto have prescribed and strict punishments for specific behaviour which will not even take justifying circumstances into consideration, usually used as a policyEND_LINE",
+        "idiom_examples": "There is zero tolerance towards any gender bias in this company.END_LINEI have a zero tolerance policy towards people that are dishonest with their work.END_LINEThis organisation has zero tolerance for any cases that include a charge of bribery.END_LINEI wish there was zero tolerance for crimes committed against women.END_LINEWe live in a liberal society so speaking of zero tolerance towards everything just cannot work out.END_LINE"
     },
-    "easier said than done": {
-        "idiom_name": "easier said than done",
-        "idiom_meaning": "to explain that a task is easier to talk about than performEND_LINEto state that it is easier to talk about perfection than achieve itEND_LINEto state that changing a person’s mind is not simpleEND_LINEsomething that appears easy but is difficult to doEND_LINE",
-        "idiom_examples": "It’s easier said than done when it comes to convincing people that something is true.END_LINEIt was easier said than done to lug those buckets up three flights of stairs.END_LINEGetting a cat to obey commands is easier said than done.END_LINEYou can bet that getting people to listen to an opposing viewpoint is easier said than done.END_LINEThe doctor said that because of your addiction, it would be easier said than done, but you must stop smoking and drinking.END_LINE"
+    "hand in hand": {
+        "idiom_name": "hand in hand",
+        "idiom_meaning": "close ties or connectionsEND_LINEin a literal sense, refers to two people holding hands, especially as a sign of loveEND_LINEroughly equivalent in meaning to “walk along with”END_LINEin a figurative sense, it is used to indicate that two things accompany, complement, or are concurrent with one anotherEND_LINE",
+        "idiom_examples": "I saw a couple walking hand in hand along the beach. END_LINEDeveloping critical thinking skills goes hand in hand with becoming a good writer. END_LINEI can’t imagine going to see a movie without eating popcorn; they go hand in hand.END_LINEThe burger and bun go hand in hand.END_LINEGood sleep and happiness always go hand in hand.END_LINE"
     },
-    "no pain no gain": {
-        "idiom_name": "no pain no gain",
-        "idiom_meaning": "it is necessary to work hard or strive to reap rewardsEND_LINEsuffer to achieve resultsEND_LINEin order to improve, progress, or succeed you must subject yourself to difficult or even painful trainingEND_LINEif not hardworking, then no achievementEND_LINEintense hard work returns more resultsEND_LINE",
-        "idiom_examples": "If you want to win the title next month, you have to train for an extra hour every day next week. No pain, no gain.END_LINEGet those legs moving faster, faster, come on, no pain, no gain.END_LINEYou have to put in a 12-hour day. No pain, no gain if you want to succeed in this world.END_LINEHe ran 20 miles yesterday as part of his training for the marathon. His legs are aching today, but no pain, no gain.END_LINETop athletes and committed fitness enthusiasts may continue to adhere to the “no pain, no gain” method of exercise.END_LINE"
+    "not the sharpest tool in the shed": {
+        "idiom_name": "not the sharpest tool in the shed",
+        "idiom_meaning": "someone who is not very clever, according to othersEND_LINEnot very intelligentEND_LINEa bit slowEND_LINEslightly (or a lot) behind the rest at getting a jokeEND_LINEstupidEND_LINE",
+        "idiom_examples": "Joe doesn’t seem to understand that we’re working to a different schedule now, since the workload has doubled. He’s not the sharpest tool in the shed.END_LINEGreat Uncle Bob was never the sharpest tool in the shed. It’s better now that he’s completely deaf, because now we no longer have to explain everything to him every five minutes.END_LINEMy brother’s not the sharpest tool in the shed. I think he might have been dropped on his head as a baby.END_LINEI knew she wasn’t the sharpest tool in the shed, but honestly – I didn’t know she was THAT dense!END_LINEI admit I’m not the sharpest tool in the shed – but at least give me the benefit of the doubt and let me enter the quiz.END_LINE"
     },
-    "keep ones own counsel": {
-        "idiom_name": "keep ones own counsel",
-        "idiom_meaning": "say little or nothing about one’s opinions or intentionsEND_LINEto remain silent about one’s thoughts or plansEND_LINEto say little or nothing about one’s opinionEND_LINEto keep quiet about one’s views or intentionsEND_LINEto conceal one’s thoughts and intentionsEND_LINE",
-        "idiom_examples": "I doubted what he said, but I kept my own counsel.END_LINENaomi is naturally a private person, so she keeps her own counsel.END_LINEOur boss is notorious for keeping his own counsel; you never know what he has in his mind.END_LINEI would love to know what Talia thinks, but she keeps her own counsel.END_LINEMy boss is the person who says less but acts more, so he keeps his own counsel.END_LINE"
+    "its not brain surgery": {
+        "idiom_name": "its not brain surgery",
+        "idiom_meaning": "to indicate that a specific task is simple and easy to undertake END_LINEto mock someone who describes a simple task as involving much more than it really does END_LINEto reassure someone that the subject or task they are being taught is simple and easily understoodEND_LINE",
+        "idiom_examples": "Learning to ride a bike is simple, it’s not brain surgery.END_LINEHe’s acting like figuring out where the trash goes is a huge achievement, but it’s not exactly brain surgery. END_LINEI can’t believe I had to show her how to use a chequebook, it’s not brain surgery.END_LINEEveryone knows if you don’t drink enough water, you’ll get dehydrated, it’s not brain surgery.END_LINEIf you can’t figure it out let me take a look, it’s not like it’s brain surgery.END_LINE"
     },
-    "bed of roses": {
-        "idiom_name": "bed of roses",
-        "idiom_meaning": "easy optionEND_LINEa comfortable or luxurious positionEND_LINEan effortless, happy situationEND_LINEa luxurious circumstancesEND_LINEa trouble-free livingEND_LINE",
-        "idiom_examples": "Weight loss is a challenging task, not a bed of roses.END_LINEMaking money is not a bed of roses; you have to wake up early and go to work.END_LINEThe life of the royal family is a bed of roses.END_LINEBefore cutting ties with my family, my life was a bed of roses because my Mom did everything for me.END_LINEMy friend told me that he wants to live in a bed of roses without hard work. Winning the Jackpot made his dream come true.END_LINE"
+    "take a leaf out of someones book": {
+        "idiom_name": "take a leaf out of someones book",
+        "idiom_meaning": "implement actionable adviceEND_LINEfollow an example set by another personEND_LINEimitate another personEND_LINEemulateEND_LINEcopyEND_LINE",
+        "idiom_examples": "I couldn’t decide what to do after high school, but my dad makes great money welding, so I took a leaf out of his book and went to trade school instead of college.END_LINESome polymers were made by studying and taking a leaf from the books of many species of ants.END_LINEIf you listen closely, it’s easy to realize that modern vocalists took leaves from the books of classic singers such as Frank Sinatra.END_LINEYou need to take a leaf out of your boss’s book and be punctual about coming to the office on time.END_LINE"
+    },
+    "scrape the bottom of the barrel": {
+        "idiom_name": "scrape the bottom of the barrel",
+        "idiom_meaning": "It is a phrase used to describe something you know is not in good condition, but you have to select it since you don’t have an option of choosing the better oneEND_LINEMany situations can make one undergo the same situationsEND_LINEIt also means pushing a specific situation to the absolute limitEND_LINEThe term is used during distress or in times of needEND_LINESelect from among the worst or choose from what is leftoverEND_LINE",
+        "idiom_examples": "Our school used to admit more than one thousand candidates, but we feel like we have been scraping the bottom of the barrel with the admitted applicants in late admission.END_LINEYou scraped the barrel since the appearance of the new car you bought is bad.END_LINEThey were scraping the bottom of the barrel when they were choosing you.END_LINEShe admitted that she was beginning to scrape the barrel.END_LINEThe department is scraping the bottom of the barrel with the results.END_LINE"
+    },
+    "zonk out": {
+        "idiom_name": "zonk out",
+        "idiom_meaning": "to fall asleep very promptlyEND_LINEto fall asleep, mostly because of physical tiredness or the influences of drugs or alcoholEND_LINEto lose consciousness from exhaustion, or intoxication, etcEND_LINE",
+        "idiom_examples": "After a very hard-working day, she zonked out.END_LINESome babies get frustrated easily and tend to zonk out.END_LINEIt’s good to read a book when you’ve had a long day and want to zonk out.END_LINESome drinks in the evening may help you hurriedly zonk out, but they also may wake you up hours later.END_LINEThe neck pillows are helpful for kids to zonk out if they’re traveling or away from their bed.END_LINE"
     }
 }
