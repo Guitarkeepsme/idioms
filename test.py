@@ -32,8 +32,9 @@ def idiom_finder(d):
     random_index = random.randint(0, len(list(d)) - 1)
     in_d = list(d.items())[random_index]
     print(in_d[1])
+    name = in_d[1].get('idiom_name')
     result = in_d[1].items()
-    return result
+    return name
     # print(in_d[1])
 
 
@@ -46,3 +47,6 @@ def idiom_finder(d):
 
 
 print(idiom_finder(test_dic_2))
+
+test_quote = r"\""
+print(test_quote)

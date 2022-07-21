@@ -40,14 +40,14 @@ for page_number in range(1, 2):
             pass
         else:
             for phrase in meanings_soup:
-                bar = str(phrase).replace("</li>", ";")  # replace("<strong>", "**").replace("</strong>", "**")
-                with_n_bar = re.sub("<[^>]*>", " ", unicodedata.normalize("NFKD", bar))
+                bar = str(phrase).replace("</li>", "END_LINE")
+                with_n_bar = re.sub("<[^>]*>", "", unicodedata.normalize("NFKD", bar))
                 meanings.append(with_n_bar.strip().replace("  ", " ").replace(".", ""))
                 meanings_counter += 1
                 if meanings_counter == 5:
                     break
             for example in sentences_soup:
-                bar = str(example).replace("</li>", "")  # replace("<strong>", "**").replace("</strong>", "**")
+                bar = str(example).replace("</li>", "")
                 with_n_bar = re.sub("<[^>]*>", " ", unicodedata.normalize("NFKD", bar))
                 sentences.append(with_n_bar.strip().replace("   ", " ").replace("  ", " "))
                 sentences_counter += 1
