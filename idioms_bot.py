@@ -26,7 +26,7 @@ async def start(message: types.Message):
                          "\n\n - Finding definitions and translations of the words; " +
                          "(*in development*)" + "\n\nThe functions which are being developed " +
                          "will appear during the next few weeks. _Stay tuned!_ 👨‍💻" +
-                         "\n\n\nPlease share your thoughts and ideas about my work " +
+                         "\n\n\nPlease share your thoughts and ideas about me " +
                          "with my creator @Dontwait", reply_markup=keyboard)
 
 
@@ -72,7 +72,7 @@ async def get_idiom_name(message: types.Message):
     in_d = list(data.items())[random_index]
     name = in_d[1].get("idiom_name")
     await message.answer("The idiom is " + "*" + str(name) + "*. "
-                     + "Have you already seen this one?", reply_markup=keyboard)
+                         + "Have you already seen this one?", reply_markup=keyboard)
 
 
 @dp.message_handler(Text(equals="No. What does it mean?"))
