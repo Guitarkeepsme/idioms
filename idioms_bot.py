@@ -17,7 +17,39 @@ async def start(message: types.Message):
     start_buttons = ["Give me an idiom", "Show me the idioms I've saved", "I want to search for an idiom"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*start_buttons)
-    await message.answer("Hello! Let's get started?", reply_markup=keyboard)
+    await message.answer("Hello, " + "*" + message.from_user.first_name +
+                         "*! " + "Let's get started?", reply_markup=keyboard)
+
+
+@dp.message_handler(Text(equals="Ok. Let's *dive into idioms*!"))
+async def first_step(message: types.Message):
+    start_buttons = ["Give me an idiom", "Show me the idioms I've saved", "I want to search for an idiom"]
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    keyboard.add(*start_buttons)
+    await message.answer("Need an idiom?", reply_markup=keyboard)
+
+#Text(equals="Give me an idiom")
+
+# async def get_idiom_name(message: types.Message):
+#     if message.text.lower() == "give me an idiom":
+#         try:
+#             idiom_buttons = ["No. What does it mean?", "I've seen it. Give me another one", "Back to menu"]
+#             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+#             keyboard.add(*idiom_buttons)
+#             await message.answer("Just a moment. I'm trying to _beat the clock_...")
+#
+#             random_index = random.randint(0, len(list(data)) - 1)
+#             global in_d
+#             in_d = list(data.items())[random_index]
+#             name = in_d[1].get("idiom_name")
+#             await message.answer("The idiom is " + "*" + str(name) + "*. "
+#                                  + "Have you already seen this one?", reply_markup=keyboard)
+#         except Exception as ex:
+#             print(ex)
+#             await message.answer("Damn...Something was wrong...")
+#
+#     else:
+#         await message.answer("I don't know what you mean. Look at the commands")
 
 
 @dp.message_handler(Text(equals="Give me an idiom"))
@@ -32,13 +64,12 @@ async def get_idiom_name(message: types.Message):
     in_d = list(data.items())[random_index]
     name = in_d[1].get("idiom_name")
     await message.answer("The idiom is " + "*" + str(name) + "*. "
-                         + "Have you already seen this one?", reply_markup=keyboard)
+                     + "Have you already seen this one?", reply_markup=keyboard)
 
 
 @dp.message_handler(Text(equals="No. What does it mean?"))
 async def get_idiom_meanings(second_message: types.Message):
-    buttons = ["Show me some examples", "I've seen it. Give me another one"] + \
-               ["Back to menu"]
+    buttons = ["Show me some examples", "I've seen it. Give me another one", "Back to menu"]
     second_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     second_keyboard.add(*buttons)
     meanings = in_d[1].get("idiom_meaning")
@@ -62,7 +93,7 @@ async def get_idiom_examples(third_message: types.Message):
 
 @dp.message_handler(Text(equals="Back to menu"))
 async def go_back(start_message: types.Message):
-    await start(start_message)
+    await first_step(start_message)
 
 
 @dp.message_handler(Text(equals="I've seen it. Give me another one"))
@@ -82,7 +113,8 @@ async def get_idioms_list(message: types.Message):
 
 @dp.message_handler(Text(equals="Add this idiom to my collection"))
 async def get_idioms_list(message: types.Message):
-    await message.answer("_Hold your horses_. This function is being developed.")
+    await message.answer("The secret of this function _has been lost in the mists of time_... " +
+                         "But I am recovering it.")
 
 
 def main():
