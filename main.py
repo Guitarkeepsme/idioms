@@ -28,8 +28,10 @@ for page_number in range(1, 152):
     all_links.extend(links)
     for link in all_links:
         all_links_set.add(link)
+
 idiom_content = {}
 info_iteration_count = 1519
+
 for link in all_links_set:
     r = requests.get(link)
     soup = BeautifulSoup(r.text, "lxml")
