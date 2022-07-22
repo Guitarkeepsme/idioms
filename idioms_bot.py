@@ -14,21 +14,29 @@ with open("data/idiom_info.json") as file:
 
 @dp.message_handler(commands="start")
 async def start(message: types.Message):
-    start_buttons = ["Give me an idiom", "Show me the idioms I've saved", "I want to search for an idiom"]
-    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-    keyboard.add(*start_buttons)
+    start_button = ["Ok. Let's begin!"]
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    keyboard.add(*start_button)
     await message.answer("Hello, " + "*" + message.from_user.first_name +
-                         "*! " + "Let's get started?", reply_markup=keyboard)
+                         "*! 👋" + "I'll help you to learn new idioms. " +
+                         "Here are the list of my functions: \n\n - Giving random idiom with " +
+                         "meanings and examples in sentences;" +
+                         "\n\n - Collecting the idioms you want to save; (*in development*)" +
+                         "\n\n - Searching for an idiom in my library; (*in development*)" +
+                         "\n\n - Finding definitions and translations of the words; " +
+                         "(*in development*)" + "\n\nThe functions which are being developed " +
+                         "will appear during the next few weeks. _Stay tuned!_ 👨‍💻" +
+                         "\n\n\nPlease share your thoughts and ideas about my work " +
+                         "with my creator @Dontwait", reply_markup=keyboard)
 
 
-@dp.message_handler(Text(equals="Ok. Let's *dive into idioms*!"))
+@dp.message_handler(Text(equals="Ok. Let's begin!"))
 async def first_step(message: types.Message):
     start_buttons = ["Give me an idiom", "Show me the idioms I've saved", "I want to search for an idiom"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*start_buttons)
-    await message.answer("Need an idiom?", reply_markup=keyboard)
+    await message.answer("Are you ready to _dive into_ idioms?", reply_markup=keyboard)
 
-#Text(equals="Give me an idiom")
 
 # async def get_idiom_name(message: types.Message):
 #     if message.text.lower() == "give me an idiom":
