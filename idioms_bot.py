@@ -3,7 +3,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.dispatcher.filters import Text
 import json
 import random
-
+#
 bot = Bot(token="5492669742:AAENd4_UHTbJEpzVIsbiqAKLe_zB3sS_WMQ", parse_mode="Markdown")
 # bot = Bot(token=os.getenv("TOKEN"))
 dp = Dispatcher(bot)
@@ -22,7 +22,7 @@ async def start(message: types.Message):
                          "Here is the list of my functions: \n\n - To give random idiom with " +
                          "meanings and examples in sentences;" +
                          "\n\n - To collect the idioms you want to save; (*in development*)" +
-                         "\n\n - To search for an idiom in my library; (*in development*)" +
+                         "\n\n - To search for an idiom within my library; (*in development*)" +
                          "\n\n - To find definitions and translations of the words; " +
                          "(*in development*)" + "\n\nThe functions which are being developed " +
                          "will appear during the next few weeks. _Stay tuned!_ 👨‍💻" +
