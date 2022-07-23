@@ -1,12 +1,11 @@
 from aiogram import Bot, Dispatcher, executor, types
-# import os
 from aiogram.dispatcher.filters import Text
 import json
 import random
 import config
-#
+
+
 bot = Bot(token=config.TOKEN, parse_mode="Markdown")
-# bot = Bot(token=os.getenv("TOKEN"))
 dp = Dispatcher(bot)
 
 with open("data/idiom_info.json") as file:
