@@ -1,52 +1,78 @@
+from bs4 import BeautifulSoup
+import unicodedata
+import requests
 import json
-import random
-from collections import OrderedDict
-with open("data/idiom_info.json") as file:
-    data = json.load(file)
-# for idiom in data:
-#     if idiom is not None:
-#         return idiom
+import re
 
-test_dic = {"1": {"один": "one"}, "2": {"два": "two"}, "3": {"три": "three"}, "4": {"четыре": "four"}}
+all_links = []
+all_links_set = set(all_links)
+page_iteration_count = 151
+print(f"Всего страниц: {page_iteration_count}")
 
-test_dic_2 = {
-    "to the core": {
-        "idiom_name": "to the core",
-        "idiom_meaning": "totally;fully;completely;utterly;through and through",
-        "idiom_examples": "Stella’s plan was rotten to the core"
-    },
-    "coin a phrase": {
-        "idiom_name": "coin a phrase",
-        "idiom_meaning": "as one might say",
-        "idiom_examples": "She was, to coin a phrase"
-    },
-    "sponger sponging sponge off": {
-        "idiom_name": "sponger sponging sponge off",
-        "idiom_meaning": "someone who scrounges from others",
-        "idiom_examples": "Josh has turned up at my house three times this week just as I’m cooking dinner"
-    }
-}
+for page_number in range(1, 2):
+    url = "https://www.theidioms.com/list"
+    r = requests.get(url + f"/page/{page_number}/")
 
+    soup = BeautifulSoup(r.text, "lxml")
+    links = []
+    for idiom_url in soup.find_all('a'):
+        if '-' not in idiom_url.get('href') or '#' in idiom_url.get('href'):
+            continue
+        links.append(idiom_url.get('href'))
+    page_iteration_count -= 1
+    print(f"Страница №{page_number} пройдена, осталось страниц: {page_iteration_count}")
+    if page_iteration_count == 0:
+        print("Все ссылки собраны!")
 
-def idiom_finder(d):
-    random_index = random.randint(0, len(list(d)) - 1)
-    in_d = list(d.items())[random_index]
-    print(in_d[1])
-    name = in_d[1].get('idiom_name')
-    result = in_d[1].items()
-    return name
-    # print(in_d[1])
+    all_links.extend(links)
+    for link in all_links:
+        all_links_set.add(link)
 
+idiom_content = {}
+info_iteration_count = 1519
 
-# def poping_idiom(d):
-#     d_tmp = d.copy()
-#     return d_tmp.popitem()
+for link in all_links_set:
+    r = requests.get(link)
+    soup = BeautifulSoup(r.text, "lxml")
+    idiom_info = soup.find("div", {"class": "article"})
+    meanings_soup = idiom_info.find("ul")
+    sentences_soup = idiom_info.find("ol")
+    meanings = []
+    sentences = []
+    meanings_counter = 0
+    sentences_counter = 0
+    if meanings_soup is None or sentences_soup is None:
+        continue
+    for phrase in meanings_soup:
+        bar = str(phrase).replace("</li>", "END_LINE")
+        with_n_bar = re.sub("<[^>]*>", "", unicodedata.normalize("NFKD", bar))
+        meanings.append(with_n_bar.strip().replace("  ", " ").replace(".", ""))
+        meanings_counter += 1
+        if meanings_counter == 5:
+            break
+    for example in sentences_soup:
+        bar = str(example).replace("</li>", "END_LINE")
+        # .replace("<strong>", "BOLD").replace("</strong>", "BOLD")
+        with_n_bar = re.sub("<[^>]*>", "", unicodedata.normalize("NFKD", bar))
+        sentences.append(with_n_bar.strip().replace("   ", " ").replace("  ", " "))
+        sentences_counter += 1
+        if sentences_counter == 5:
+            break
+    meanings_str = ''.join(meanings)
+    sentences_str = ''.join(sentences)
+    idiom_name = link.split(".com/")[-1].replace("/", "").replace("-", " ")
+    # print(idiom_name)
+    idiom_content[idiom_name] = {
+            "idiom_name": idiom_name,
+            "idiom_meaning": meanings_str,
+            "idiom_examples": sentences_str
+        }
+    # print(idiom_content)
 
-#
-# print(poping_idiom(test_dic))
+    with open("data/test.json", "w") as file:
+        json.dump(idiom_content, file, indent=4, ensure_ascii=False)
 
-
-print(idiom_finder(test_dic_2))
-
-test_quote = r"\""
-print(test_quote)
+    info_iteration_count -= 1
+    print(f"Фразеологизм №{1519 - info_iteration_count} взят, осталось фразеологизмов: {info_iteration_count}")
+    if info_iteration_count == 0:
+        print("Все фразеологизмы собраны!")
