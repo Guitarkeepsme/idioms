@@ -3,8 +3,9 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.dispatcher.filters import Text
 import json
 import random
+import config
 #
-bot = Bot(token="5492669742:AAENd4_UHTbJEpzVIsbiqAKLe_zB3sS_WMQ", parse_mode="Markdown")
+bot = Bot(token=config.TOKEN, parse_mode="Markdown")
 # bot = Bot(token=os.getenv("TOKEN"))
 dp = Dispatcher(bot)
 
