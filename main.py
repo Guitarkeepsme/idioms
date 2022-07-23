@@ -2,7 +2,7 @@ from bs4 import BeautifulSoup
 import unicodedata
 import requests
 import json
-import re
+gimport re
 
 all_links = []
 all_links_set = set(all_links)
