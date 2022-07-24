@@ -3,7 +3,7 @@ from aiogram.dispatcher.filters import Text
 import json
 import random
 import config
-
+# import asyncio
 
 bot = Bot(token=config.TOKEN, parse_mode="Markdown")
 dp = Dispatcher(bot)
@@ -19,11 +19,11 @@ async def start(message: types.Message):
     keyboard.add(*start_button)
     await message.answer("Hello, " + "*" + message.from_user.first_name +
                          "*! 👋" + "I'll help you to learn new idioms. " +
-                         "Here is the list of my functions: \n\n - To give random idiom with " +
+                         "Here is the list of my functions: \n\n - Giving random idiom with " +
                          "meanings and examples in sentences;" +
-                         "\n\n - To collect the idioms you want to save; (*in development*)" +
-                         "\n\n - To search for an idiom within my library; (*in development*)" +
-                         "\n\n - To find definitions and translations of the words; " +
+                         "\n\n - Collecting the idioms you want to save; (*in development*)" +
+                         "\n\n - Searching for an idiom within my library; (*in development*)" +
+                         "\n\n - Finding definitions and translations of the words; " +
                          "(*in development*)" + "\n\nThe functions which are being developed " +
                          "will appear during the next few weeks. _Stay tuned!_ 👨‍💻" +
                          "\n\n\nPlease share your thoughts and ideas about me " +
