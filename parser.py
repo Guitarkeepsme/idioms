@@ -29,7 +29,7 @@ for page_number in range(1, 152):
         all_links_set.add(link)
 
 idiom_content = {}
-info_iteration_count = 1519
+info_iteration_count = 1503
 
 for link in all_links_set:
     r = requests.get(link)
@@ -52,7 +52,6 @@ for link in all_links_set:
             break
     for example in sentences_soup:
         bar = str(example).replace("</li>", "END_LINE")
-        # .replace("<strong>", "BOLD").replace("</strong>", "BOLD")
         with_n_bar = re.sub("<[^>]*>", "", unicodedata.normalize("NFKD", bar))
         sentences.append(with_n_bar.strip().replace("   ", " ").replace("  ", " "))
         sentences_counter += 1
@@ -69,10 +68,12 @@ for link in all_links_set:
         }
     # print(idiom_content)
 
-    with open("data/test.json", "w") as file:
+    with open("data/idiom_info.json", "w") as file:
         json.dump(idiom_content, file, indent=4, ensure_ascii=False)
 
     info_iteration_count -= 1
-    print(f"Фразеологизм №{1519 - info_iteration_count} взят, осталось фразеологизмов: {info_iteration_count}")
+    print(f"Фразеологизм №{1503 - info_iteration_count} взят, осталось фразеологизмов: {info_iteration_count}")
     if info_iteration_count == 0:
         print("Все фразеологизмы собраны!")
+
+        # поменять все \n в файле

@@ -18,7 +18,7 @@ async def start(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(*start_button)
     await message.answer("Hello, " + "*" + message.from_user.first_name +
-                         "*! 👋" + "I'll help you to learn new idioms. " +
+                         "*! 👋" + " I'll help you to learn new idioms. " +
                          "Here is the list of my functions: \n\n - Giving random idiom with " +
                          "meanings and examples in sentences;" +
                          "\n\n - Collecting the idioms you want to save; (*in development*)" +

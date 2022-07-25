@@ -1,3 +1,5 @@
+# этот файл не имеет никакого отношения к боту. Он нужен как практика изучения алгоритмов
+
 sample = [-4, 3, 2, 10, -17]
 
 
@@ -32,18 +34,25 @@ def fact(x):
         return x * fact(x-1)
 
 
-def summ(arr):
-    count = 0
-    for i in arr:
-        count += i
-    return count
-
-
-def rec_sum(arr):
-    if arr == []:
+def my_sum(li):
+    if li == []:
         return 0
-    else:
-        return 1 + rec_sum(arr[1:])
+    return li[0] + my_sum(li[1:])
 
 
-print(rec_sum([2, 4, 5, 4, 1]))
+def count(li):
+    if li == []:
+        return 0
+    return 1 + count(li[1:])
+
+
+def max_index(li):
+    if len(li) == 2:
+        return li[0] if li[0] > li[1] else li[1]
+    return
+
+
+print(my_sum([2, 4, 5, 4, 1]))
+print(count([1, 2, 3]))
+
+
