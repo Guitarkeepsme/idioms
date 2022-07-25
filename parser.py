@@ -29,7 +29,7 @@ for page_number in range(1, 152):
         all_links_set.add(link)
 
 idiom_content = {}
-info_iteration_count = 1503
+info_iteration_count = 1517
 
 for link in all_links_set:
     r = requests.get(link)
@@ -72,7 +72,7 @@ for link in all_links_set:
         json.dump(idiom_content, file, indent=4, ensure_ascii=False)
 
     info_iteration_count -= 1
-    print(f"Фразеологизм №{1503 - info_iteration_count} взят, осталось фразеологизмов: {info_iteration_count}")
+    print(f"Фразеологизм №{1517 - info_iteration_count} взят, осталось фразеологизмов: {info_iteration_count}")
     if info_iteration_count == 0:
         print("Все фразеологизмы собраны!")
 
