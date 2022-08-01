@@ -1,15 +1,24 @@
 from aiogram import Bot, Dispatcher, executor, types
 from aiogram.dispatcher.filters import Text
+# from aiogram.dispatcher.filters.state import State, StatesGroup
+# from aiogram.dispatcher import FSMContext
 import json
 import random
 import config
 # import asyncio
-
+from data import bot_messages
 bot = Bot(token=config.TOKEN, parse_mode="Markdown")
 dp = Dispatcher(bot)
 
-with open("data/idiom_info.json") as file:
+with open("data/idiom_info.json", encoding='utf-8', newline='') as file:
     data = json.load(file)
+
+
+# # States
+# class Form(StatesGroup):
+#     idiom_example = State()
+#     sentences_example = State()
+#     idioms_collection = State()
 
 
 @dp.message_handler(commands="start")
@@ -18,16 +27,7 @@ async def start(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(*start_button)
     await message.answer("Hello, " + "*" + message.from_user.first_name +
-                         "*! 👋" + " I'll help you to learn new idioms. " +
-                         "Here is the list of my functions: \n\n - Giving random idiom with " +
-                         "meanings and examples in sentences;" +
-                         "\n\n - Collecting the idioms you want to save; (*in development*)" +
-                         "\n\n - Searching for an idiom within my library; (*in development*)" +
-                         "\n\n - Finding definitions and translations of the words; " +
-                         "(*in development*)" + "\n\nThe functions which are being developed " +
-                         "will appear during the next few weeks. _Stay tuned!_ 👨‍💻" +
-                         "\n\n\nPlease share your thoughts and ideas about me " +
-                         "with my creator @Dontwait", reply_markup=keyboard)
+                         "*! 👋" + bot_messages.start_message, reply_markup=keyboard)
 
 
 @dp.message_handler(Text(equals="Ok. Let's begin!"))
@@ -35,33 +35,13 @@ async def first_step(message: types.Message):
     start_buttons = ["Give me an idiom", "Show me the idioms I've saved", "I want to search for an idiom"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*start_buttons)
+    # await Form.idiom_example.set()
+
     await message.answer("Are you ready to _dive into_ idioms?", reply_markup=keyboard)
 
 
-# async def get_idiom_name(message: types.Message):
-#     if message.text.lower() == "give me an idiom":
-#         try:
-#             idiom_buttons = ["No. What does it mean?", "I've seen it. Give me another one", "Back to menu"]
-#             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-#             keyboard.add(*idiom_buttons)
-#             await message.answer("Just a moment. I'm trying to _beat the clock_...")
-#
-#             random_index = random.randint(0, len(list(data)) - 1)
-#             global in_d
-#             in_d = list(data.items())[random_index]
-#             name = in_d[1].get("idiom_name")
-#             await message.answer("The idiom is " + "*" + str(name) + "*. "
-#                                  + "Have you already seen this one?", reply_markup=keyboard)
-#         except Exception as ex:
-#             print(ex)
-#             await message.answer("Damn...Something was wrong...")
-#
-#     else:
-#         await message.answer("I don't know what you mean. Look at the commands")
-
-
-@dp.message_handler(Text(equals="Give me an idiom"))
-async def get_idiom_name(message: types.Message):
+@dp.message_handler(Text(equals="Give me an idiom")) # state=Form.idiom_example
+async def get_idiom_name(message: types.Message):  # state: FSMContext
     idiom_buttons = ["No. What does it mean?", "I've seen it. Give me another one", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*idiom_buttons)
@@ -71,6 +51,10 @@ async def get_idiom_name(message: types.Message):
     global in_d
     in_d = list(data.items())[random_index]
     name = in_d[1].get("idiom_name")
+    # async with state.proxy() as datum:
+    #     datum['idiom_example'] = in_d
+    # await Form.next()
+
     await message.answer("The idiom is " + "*" + str(name) + "*. "
                          + "Have you already seen this one?", reply_markup=keyboard)
 
@@ -131,3 +115,26 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+# @dp.message_handler(Text(equals="Give me an idiom"))
+# async def get_idiom_name(message: types.Message):
+#     if message.text.lower() == "give me an idiom":
+#         try:
+#             idiom_buttons = ["No. What does it mean?", "I've seen it. Give me another one", "Back to menu"]
+#             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+#             keyboard.add(*idiom_buttons)
+#             await message.answer("Just a moment. I'm trying to _beat the clock_...")
+#
+#             random_index = random.randint(0, len(list(data)) - 1)
+#             global in_d
+#             # переписать логику, заменив глобальную переменную на классы -- но потом
+#             in_d = list(data.items())[random_index]
+#             name = in_d[1].get("idiom_name")
+#             await message.answer("The idiom is " + "*" + str(name) + "*. "
+#                                  + "Have you already seen this one?", reply_markup=keyboard)
+#         except Exception as ex:
+#             print(ex)
+#             await message.answer("Damn...Something was wrong...")
+#
+#     else:
+#         await message.answer("I don't know what you mean. Look at the commands")
