@@ -7,8 +7,12 @@ import random
 import config
 # import asyncio
 from data import bot_messages
+import sqlite3
+
+
 bot = Bot(token=config.TOKEN, parse_mode="Markdown")
 dp = Dispatcher(bot)
+
 
 with open("data/idiom_info.json", encoding='utf-8', newline='') as file:
     data = json.load(file)
@@ -51,7 +55,7 @@ async def first_step(message: types.Message):
                                                          "I've seen it. Give me another one",
                                                          "Add this idiom to my collection", "Back to menu"])
 async def invalid_message(message: types.Message):
-    return await message.reply("Later you will be able to search for this word. "
+    return await message.reply("Later you will be able to search for this. "
                                + "But for now, provide one of the current commands")
 
 
