@@ -9,3 +9,7 @@ start_message = "I'll help you to learn new idioms. " + \
                          "will appear during the next few weeks. _Stay tuned!_ 👨‍💻" + \
                          "\n\n\nPlease share your thoughts and ideas about me " + \
                  "with my creator @Dontwait"
+
+commands = ["Ok. Let's begin!", "Give me an idiom", "Show me the idioms I've saved", "I want to search for an idiom",
+            "No. What does it mean?", "Show me some examples", "I've seen it. Give me another one", "Back to menu",
+            "Add this idiom to my collection"]

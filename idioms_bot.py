@@ -27,7 +27,7 @@ async def start(message: types.Message):
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(*start_button)
     await message.answer("Hello, " + "*" + message.from_user.first_name +
-                         "*! 👋" + bot_messages.start_message, reply_markup=keyboard)
+                         "*! 👋 " + bot_messages.start_message, reply_markup=keyboard)
 
 
 @dp.message_handler(Text(equals="Ok. Let's begin!"))
@@ -40,7 +40,7 @@ async def first_step(message: types.Message):
     await message.answer("Are you ready to _dive into_ idioms?", reply_markup=keyboard)
 
 
-@dp.message_handler(Text(equals="Give me an idiom")) # state=Form.idiom_example
+@dp.message_handler(Text(equals="Give me an idiom"))  # state=Form.idiom_example
 async def get_idiom_name(message: types.Message):  # state: FSMContext
     idiom_buttons = ["No. What does it mean?", "I've seen it. Give me another one", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -88,6 +88,12 @@ async def go_back(start_message: types.Message):
     await first_step(start_message)
 
 
+@dp.message_handler(lambda message: message.text not in bot_messages.commands)
+async def invalid_message(message: types.Message):
+    return await message.reply("Later you will be able to search for this. "
+                               "But for now, please provide one of current commands")
+
+
 @dp.message_handler(Text(equals="I've seen it. Give me another one"))
 async def go_another(another_message: types.Message):
     await get_idiom_name(another_message)
@@ -115,26 +121,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
-# @dp.message_handler(Text(equals="Give me an idiom"))
-# async def get_idiom_name(message: types.Message):
-#     if message.text.lower() == "give me an idiom":
-#         try:
-#             idiom_buttons = ["No. What does it mean?", "I've seen it. Give me another one", "Back to menu"]
-#             keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-#             keyboard.add(*idiom_buttons)
-#             await message.answer("Just a moment. I'm trying to _beat the clock_...")
-#
-#             random_index = random.randint(0, len(list(data)) - 1)
-#             global in_d
-#             # переписать логику, заменив глобальную переменную на классы -- но потом
-#             in_d = list(data.items())[random_index]
-#             name = in_d[1].get("idiom_name")
-#             await message.answer("The idiom is " + "*" + str(name) + "*. "
-#                                  + "Have you already seen this one?", reply_markup=keyboard)
-#         except Exception as ex:
-#             print(ex)
-#             await message.answer("Damn...Something was wrong...")
-#
-#     else:
-#         await message.answer("I don't know what you mean. Look at the commands")
