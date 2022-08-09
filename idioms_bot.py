@@ -19,6 +19,7 @@ with open("data/idiom_info.json", encoding='utf-8', newline='') as file:
 #     idiom_example = State()
 #     sentences_example = State()
 #     idioms_collection = State()
+users_database = ['alexey']
 
 
 @dp.message_handler(commands="start")
@@ -28,6 +29,19 @@ async def start(message: types.Message):
     keyboard.add(*start_button)
     await message.answer("Hello, " + "*" + message.from_user.first_name +
                          "*! 👋 " + bot_messages.start_message, reply_markup=keyboard)
+
+
+# @dp.message_handler(lambda message: message.text)
+# async def adding_nickname(message: types.Message):
+#     start_button = ["Ok. Let's begin!"]
+#     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+#     keyboard.add(*start_button)
+#     if message.text not in bot_messages.commands:
+#         return await message.reply("Nice! Since now, I know you as *"
+#                                    + message.text + "*. Are you ready to begin?",  reply_markup=keyboard)
+#     else:
+#         return await message.answer("Unfortunately, this nickname has already been taken." +
+#                                     " Please create another one.")
 
 
 @dp.message_handler(Text(equals="Ok. Let's begin!"))
@@ -94,6 +108,24 @@ async def invalid_message(message: types.Message):
                                "But for now, please provide one of current commands")
 
 
+@dp.message_handler(Text(equals="Add this idiom to my collection"))
+async def get_idioms_list(message: types.Message):
+    collection_buttons = ["Show me the idioms I've saved", "Back to menu"]
+    collection_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    collection_keyboard.add(*collection_buttons)
+    await message.answer("Ok, the idiom *" + in_d[1].get("idiom_name")
+                         + "* " + "has been saved. "
+                                  "Do you want to see your collection or start over?",
+                         reply_markup=collection_keyboard)
+
+
+
+
+
+
+
+
+
 @dp.message_handler(Text(equals="I've seen it. Give me another one"))
 async def go_another(another_message: types.Message):
     await get_idiom_name(another_message)
@@ -109,10 +141,6 @@ async def get_idioms_list(message: types.Message):
     await message.answer("Don't _jump the gun_! This function is being developed.")
 
 
-@dp.message_handler(Text(equals="Add this idiom to my collection"))
-async def get_idioms_list(message: types.Message):
-    await message.answer("The secret of this function _has been lost in the mists of time_... " +
-                         "But I am recovering it.")
 
 
 def main():
