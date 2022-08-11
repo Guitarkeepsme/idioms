@@ -5,6 +5,7 @@ from aiogram.dispatcher.filters import Text
 import json
 import random
 import config
+import dbworker
 # import asyncio
 from data import bot_messages
 bot = Bot(token=config.TOKEN, parse_mode="Markdown")
@@ -13,12 +14,6 @@ dp = Dispatcher(bot)
 with open("data/idiom_info.json", encoding='utf-8', newline='') as file:
     data = json.load(file)
 
-
-# # States
-# class Form(StatesGroup):
-#     idiom_example = State()
-#     sentences_example = State()
-#     idioms_collection = State()
 users_database = ['alexey']
 
 
@@ -31,17 +26,14 @@ async def start(message: types.Message):
                          "*! 👋 " + bot_messages.start_message, reply_markup=keyboard)
 
 
-# @dp.message_handler(lambda message: message.text)
-# async def adding_nickname(message: types.Message):
+# @dp.message_handler(commands=["reset"])
+# def cmd_reset(message: types.Message):
 #     start_button = ["Ok. Let's begin!"]
 #     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
 #     keyboard.add(*start_button)
-#     if message.text not in bot_messages.commands:
-#         return await message.reply("Nice! Since now, I know you as *"
-#                                    + message.text + "*. Are you ready to begin?",  reply_markup=keyboard)
-#     else:
-#         return await message.answer("Unfortunately, this nickname has already been taken." +
-#                                     " Please create another one.")
+#     dbworker.set_state(message.chat.id, config.States.S_IDIOM.value)
+#     await message.answer("Well, let's start _from scratch_. \n\n\n Hello, " + "*" + message.from_user.first_name +
+#                          "*! 👋 " + bot_messages.start_message, reply_markup=keyboard)
 
 
 @dp.message_handler(Text(equals="Ok. Let's begin!"))
@@ -49,12 +41,13 @@ async def first_step(message: types.Message):
     start_buttons = ["Give me an idiom", "Show me the idioms I've saved", "I want to search for an idiom"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*start_buttons)
-    # await Form.idiom_example.set()
+    dbworker.set_state(message.chat.id, config.States.S_IDIOM.value)
 
     await message.answer("Are you ready to _dive into_ idioms?", reply_markup=keyboard)
 
 
-@dp.message_handler(Text(equals="Give me an idiom"))  # state=Form.idiom_example
+@dp.message_handler(Text(equals="Give me an idiom"),
+                    lambda message: dbworker.get_current_state(message.chat.id) == config.States.S_IDIOM.value)
 async def get_idiom_name(message: types.Message):  # state: FSMContext
     idiom_buttons = ["No. What does it mean?", "I've seen it. Give me another one", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -65,32 +58,33 @@ async def get_idiom_name(message: types.Message):  # state: FSMContext
     global in_d
     in_d = list(data.items())[random_index]
     name = in_d[1].get("idiom_name")
-    # async with state.proxy() as datum:
-    #     datum['idiom_example'] = in_d
-    # await Form.next()
 
     await message.answer("The idiom is " + "*" + str(name) + "*. "
                          + "Have you already seen this one?", reply_markup=keyboard)
 
 
-@dp.message_handler(Text(equals="No. What does it mean?"))
-async def get_idiom_meanings(second_message: types.Message):
+@dp.message_handler(Text(equals="No. What does it mean?"),
+                    lambda message: dbworker.get_current_state(message.chat.id) == config.States.S_MEANING.value)
+async def get_idiom_meanings(message: types.Message):
     buttons = ["Show me some examples", "I've seen it. Give me another one", "Back to menu"]
     second_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     second_keyboard.add(*buttons)
     meanings = in_d[1].get("idiom_meaning")
+    dbworker.set_state(message.chat.id, config.States.S_EXAMPLES.value)
 
-    await second_message.answer("This idiom means: \n \n - " + "_" +
+    await message.answer("This idiom means: \n \n - " + "_" +
                                 str(meanings).replace("END_LINE", "\n \n - ")[0:-3]
                                 + "_", reply_markup=second_keyboard)
 
 
-@dp.message_handler(Text(equals="Show me some examples"))
+@dp.message_handler(Text(equals="Show me some examples"),
+                    lambda message: dbworker.get_current_state(message.chat.id) == config.States.S_EXAMPLES.value)
 async def get_idiom_examples(third_message: types.Message):
     buttons = ["Add this idiom to my collection", "I've seen it. Give me another one", "Back to menu"]
     second_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     examples = in_d[1].get("idiom_examples")
     second_keyboard.add(*buttons)
+    dbworker.set_state(third_message.chat.id, config.States.S_COLLECTION.value)
     # попытаться как-то выделить жирным шрифтом идиомы внутри примеров
     await third_message.answer("Here are some examples: \n \n - " + "_" +
                                str(examples).replace("END_LINE", "\n \n - ")[0:-3]
@@ -108,7 +102,8 @@ async def invalid_message(message: types.Message):
                                "But for now, please provide one of current commands")
 
 
-@dp.message_handler(Text(equals="Add this idiom to my collection"))
+@dp.message_handler(Text(equals="Add this idiom to my collection"),
+                    lambda message: dbworker.get_current_state(message.chat.id) == config.States.S_COLLECTION.value)
 async def get_idioms_list(message: types.Message):
     collection_buttons = ["Show me the idioms I've saved", "Back to menu"]
     collection_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -129,7 +124,8 @@ async def get_idioms_list(message: types.Message):
     await message.answer("_Hold your horses_. This function is being developed.")
 
 
-@dp.message_handler(Text(equals="I want to search for an idiom"))
+@dp.message_handler(Text(equals="I want to search for an idiom"),
+                    lambda message: dbworker.get_current_state(message.chat.id) == config.States.S_IDIOM.value)
 async def get_idioms_list(message: types.Message):
     await message.answer("Don't _jump the gun_! This function is being developed.")
 
@@ -143,3 +139,16 @@ if __name__ == "__main__":
 
 
 #  логирование, трейсинг
+
+
+# @dp.message_handler(lambda message: message.text)
+# async def adding_nickname(message: types.Message):
+#     start_button = ["Ok. Let's begin!"]
+#     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+#     keyboard.add(*start_button)
+#     if message.text not in bot_messages.commands:
+#         return await message.reply("Nice! Since now, I know you as *"
+#                                    + message.text + "*. Are you ready to begin?",  reply_markup=keyboard)
+#     else:
+#         return await message.answer("Unfortunately, this nickname has already been taken." +
+#                                     " Please create another one.")
