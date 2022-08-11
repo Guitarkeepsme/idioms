@@ -119,13 +119,6 @@ async def get_idioms_list(message: types.Message):
                          reply_markup=collection_keyboard)
 
 
-
-
-
-
-
-
-
 @dp.message_handler(Text(equals="I've seen it. Give me another one"))
 async def go_another(another_message: types.Message):
     await get_idiom_name(another_message)
@@ -141,11 +134,12 @@ async def get_idioms_list(message: types.Message):
     await message.answer("Don't _jump the gun_! This function is being developed.")
 
 
-
-
 def main():
     executor.start_polling(dp)
 
 
 if __name__ == "__main__":
     main()
+
+
+#  логирование, трейсинг
