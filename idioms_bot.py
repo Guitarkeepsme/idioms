@@ -144,7 +144,13 @@ async def go_back(start_message: types.Message):
 
 @dp.message_handler(Text(equals="Show me the idioms I've saved"), state='*')
 async def get_idioms_list(message: types.Message):
-    await message.answer("_Hold your horses_. This function is being developed.")
+
+
+    cursor.execute('SELECT idiom_name FROM Idioms WHERE idiom_id in'
+                   ' (SELECT idiom_id FROM Idiom_collections WHERE User_id = ?)', (message.from_user.username,))
+    idioms_list = cursor.fetchall()
+    connection.commit()
+    await message.answer("You're idioms are: " + str(idioms_list))
 
 
 @dp.message_handler(Text(equals="I want to search for an idiom"), state='*')
