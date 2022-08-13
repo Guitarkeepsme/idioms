@@ -123,11 +123,11 @@ async def update_collection(message: types.Message, state: FSMContext):
     async with state.proxy() as current_idiom:
         idiom_name = current_idiom["idiom"][1].get("idiom_name")
         idiom_id = current_idiom["idiom"][1].get("idiom_id")
-        cursor.execute('INSERT INTO Idiom_collections (User_id, Idiom_id) VALUES (?, ?)', (message.from_user.username, idiom_id))
+        cursor.execute('INSERT INTO Idiom_collections (User_id, Idiom_id) VALUES (?, ?)',
+                       (message.from_user.username, idiom_id))
         connection.commit()
         await message.answer("Ok, the idiom *" + idiom_name
-                             + "* " + "has been saved. Its id is *" + str(idiom_id) +
-                                      "*. Do you want to see your collection or start over?",
+                             + "* " + "has been saved. Do you want to see your collection or start over?",
                              reply_markup=collection_keyboard)
 
 
