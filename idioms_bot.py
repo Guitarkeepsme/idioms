@@ -6,7 +6,7 @@ from aiogram.dispatcher import FSMContext
 import json
 import random
 import config
-# import dbworker
+import sqlite3
 # import asyncio
 from data import bot_messages
 bot = Bot(token=config.TOKEN, parse_mode="Markdown")
@@ -14,10 +14,12 @@ storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
 
-with open("data/idiom_info.json", encoding='utf-8', newline='') as file:
+with open("data/idiom_info_with_id.json", encoding='utf-8', newline='') as file:
     data = json.load(file)
 
-users_database = ['alexey']
+
+connection = sqlite3.connect('data/idioms.db')
+cursor = connection.cursor()
 
 
 class Form(StatesGroup):
@@ -32,6 +34,8 @@ async def start(message: types.Message):
     start_button = ["Ok. Let's begin!"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(*start_button)
+    cursor.execute('INSERT OR IGNORE INTO Users (ID) VALUES (:ID)', (message.from_user.username,))
+    connection.commit()
     await message.answer("Hello, " + "*" + message.from_user.first_name +
                          "*! 👋 " + bot_messages.start_message, reply_markup=keyboard)
 
@@ -79,14 +83,12 @@ async def get_idiom_name(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(Text(equals="No. What does it mean?"), state=Form.meaning)
-# lambda message: dbworker.get_current_state(message.chat.id) == config.States.S_MEANING.value
 async def get_idiom_meanings(message: types.Message, state: FSMContext):
     buttons = ["Show me some examples", "I've seen it. Give me another one", "Back to menu"]
     second_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     second_keyboard.add(*buttons)
     async with state.proxy() as current_idiom:
         meanings = current_idiom['idiom'][1].get("idiom_meaning")
-        # dbworker.set_state(message.chat.id, config.States.S_EXAMPLES.value)
         await Form.next()
         await message.answer("This idiom means: \n \n - " + "_" +
                                 str(meanings).replace("END_LINE", "\n \n - ")[0:-3]
@@ -94,14 +96,12 @@ async def get_idiom_meanings(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(Text(equals="Show me some examples"), state=Form.examples)
-# lambda message: dbworker.get_current_state(message.chat.id) == config.States.S_EXAMPLES.value
 async def get_idiom_examples(third_message: types.Message, state: FSMContext):
     buttons = ["Add this idiom to my collection", "I've seen it. Give me another one", "Back to menu"]
     second_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     async with state.proxy() as current_idiom:
         examples = current_idiom['idiom'][1].get("idiom_examples")
         second_keyboard.add(*buttons)
-        # dbworker.set_state(third_message.chat.id, config.States.S_COLLECTION.value)
         # попытаться как-то выделить жирным шрифтом идиомы внутри примеров
         await Form.next()
         await third_message.answer("Here are some examples: \n \n - " + "_" +
@@ -116,16 +116,18 @@ async def invalid_message(message: types.Message):
 
 
 @dp.message_handler(Text(equals="Add this idiom to my collection"), state=Form.collection)
-# lambda message: dbworker.get_current_state(message.chat.id) == config.States.S_COLLECTION.value
-async def open_collection(message: types.Message, state: FSMContext):
+async def update_collection(message: types.Message, state: FSMContext):
     collection_buttons = ["Show me the idioms I've saved", "Back to menu"]
     collection_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     collection_keyboard.add(*collection_buttons)
     async with state.proxy() as current_idiom:
-        idiom_name = current_idiom['idiom'][1].get("idiom_name")
+        idiom_name = current_idiom["idiom"][1].get("idiom_name")
+        idiom_id = current_idiom["idiom"][1].get("idiom_id")
+        cursor.execute('INSERT INTO Idiom_collections (User_id, Idiom_id) VALUES (?, ?)', (message.from_user.username, idiom_id))
+        connection.commit()
         await message.answer("Ok, the idiom *" + idiom_name
-                             + "* " + "has been saved. "
-                                      "Do you want to see your collection or start over?",
+                             + "* " + "has been saved. Its id is *" + str(idiom_id) +
+                                      "*. Do you want to see your collection or start over?",
                              reply_markup=collection_keyboard)
 
 
@@ -146,7 +148,6 @@ async def get_idioms_list(message: types.Message):
 
 
 @dp.message_handler(Text(equals="I want to search for an idiom"), state='*')
-#  lambda message: dbworker.get_current_state(message.chat.id) == config.States.S_IDIOM.value
 async def get_idioms_list(message: types.Message):
     await message.answer("Don't _jump the gun_! This function is being developed.")
 
