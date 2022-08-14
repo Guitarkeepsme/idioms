@@ -2,6 +2,7 @@ from aiogram import Bot, Dispatcher, executor, types
 from aiogram.dispatcher.filters import Text
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
+# import aiogram.utils.markdown as md
 from aiogram.dispatcher import FSMContext
 import json
 import random
@@ -24,9 +25,8 @@ cursor = connection.cursor()
 
 class Form(StatesGroup):
     idiom = State()
-    meaning = State()
-    examples = State()
-    collection = State()
+    user_idiom = State()
+    # delete_idiom = State()
 
 
 @dp.message_handler(commands="start", state='*')
@@ -76,26 +76,23 @@ async def get_idiom_name(message: types.Message, state: FSMContext):
         current_idiom['idiom'] = in_d
     name = in_d[1].get("idiom_name")
 
-    await Form.next()
-
     await message.answer("The idiom is " + "*" + str(name) + "*. "
                          + "Have you already seen this one?", reply_markup=keyboard)
 
 
-@dp.message_handler(Text(equals="No. What does it mean?"), state=Form.meaning)
+@dp.message_handler(Text(equals="No. What does it mean?"), state=Form.idiom)
 async def get_idiom_meanings(message: types.Message, state: FSMContext):
     buttons = ["Show me some examples", "I've seen it. Give me another one", "Back to menu"]
     second_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     second_keyboard.add(*buttons)
     async with state.proxy() as current_idiom:
         meanings = current_idiom['idiom'][1].get("idiom_meaning")
-        await Form.next()
         await message.answer("This idiom means: \n \n - " + "_" +
-                                str(meanings).replace("END_LINE", "\n \n - ")[0:-3]
-                                + "_", reply_markup=second_keyboard)
+                             str(meanings).replace("END_LINE", "\n \n − ")[0:-3]
+                             + "_", reply_markup=second_keyboard)
 
 
-@dp.message_handler(Text(equals="Show me some examples"), state=Form.examples)
+@dp.message_handler(Text(equals="Show me some examples"), state=Form.idiom)
 async def get_idiom_examples(third_message: types.Message, state: FSMContext):
     buttons = ["Add this idiom to my collection", "I've seen it. Give me another one", "Back to menu"]
     second_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -103,19 +100,19 @@ async def get_idiom_examples(third_message: types.Message, state: FSMContext):
         examples = current_idiom['idiom'][1].get("idiom_examples")
         second_keyboard.add(*buttons)
         # попытаться как-то выделить жирным шрифтом идиомы внутри примеров
-        await Form.next()
-        await third_message.answer("Here are some examples: \n \n - " + "_" +
-                                   str(examples).replace("END_LINE", "\n \n - ")[0:-3]
+        await third_message.answer("Here are some examples: \n \n − " + "_" +
+                                   str(examples).replace("END_LINE", "\n \n − ")[0:-3]
                                    + "_", reply_markup=second_keyboard)
 
 
-@dp.message_handler(lambda message: message.text not in bot_messages.commands, state='*')
+@dp.message_handler(lambda message: message.text not in bot_messages.commands, state=Form.idiom)
 async def invalid_message(message: types.Message):
     return await message.reply("Later you will be able to search for this. "
-                               "But for now, please provide one of current commands")
+                               "But for now, please provide one of current commands. \n\n"
+                               "If you wanted to *remind you about an idiom*, click the keyboard button first.")
 
 
-@dp.message_handler(Text(equals="Add this idiom to my collection"), state=Form.collection)
+@dp.message_handler(Text(equals="Add this idiom to my collection"), state=Form.idiom)
 async def update_collection(message: types.Message, state: FSMContext):
     collection_buttons = ["Show me the idioms I've saved", "Back to menu"]
     collection_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
@@ -144,13 +141,68 @@ async def go_back(start_message: types.Message):
 
 @dp.message_handler(Text(equals="Show me the idioms I've saved"), state='*')
 async def get_idioms_list(message: types.Message):
-
-
+    collection_buttons = ["Remind me about an idiom...", "Back to menu"]
+    collection_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    collection_keyboard.add(*collection_buttons)
     cursor.execute('SELECT idiom_name FROM Idioms WHERE idiom_id in'
                    ' (SELECT idiom_id FROM Idiom_collections WHERE User_id = ?)', (message.from_user.username,))
     idioms_list = cursor.fetchall()
     connection.commit()
-    await message.answer("You're idioms are: " + str(idioms_list))
+    result = []
+    for idiom in idioms_list:
+        str_idiom = "−" + " " + " ".join(idiom)
+        result.append(str_idiom)
+    result.reverse()
+    await message.answer("*Your idioms are:* \n " + str(result).replace("'", "\n").replace(",", " ") +
+                         "\n \n Do you want me to *remind* you about an idiom or *delete* one of them?",
+                         reply_markup=collection_keyboard)
+
+
+@dp.message_handler(Text(equals="Remind me about an idiom..."), state=Form.idiom)
+async def reminder_message(message: types.Message):
+    await message.answer(bot_messages.reminder)
+    await Form.user_idiom.set()
+
+
+@dp.message_handler(state=Form.user_idiom)
+async def idiom_reverse(message: types.Message, state: FSMContext):
+    buttons = ["Show me the idioms I've saved", "Back to menu"]
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    keyboard.add(*buttons)
+    async with state.proxy() as user_idiom_name:
+        user_idiom_name['user_idiom'] = message.text
+    cursor.execute('SELECT idiom_meaning FROM Idioms WHERE idiom_name = ?', (message.text,))
+    user_idiom = [item[0] for item in cursor.fetchall()]
+    connection.commit()
+    cursor.execute('SELECT idiom_examples FROM Idioms WHERE idiom_name = ?', (message.text,))
+    user_idiom_examples = [item[0] for item in cursor.fetchall()]
+    connection.commit()
+    print(user_idiom)
+    if user_idiom == []:
+        await message.answer("There is no such idiom in your list. Check your message for typos and write again.")
+    else:
+        await message.answer("*This idiom means:* \n \n" + "_" +
+                             str(user_idiom).replace("END_LINE", "\n \n")[2:-2]
+                             + "_" + "*Here are some examples:* \n \n " + "_" +
+                             str(user_idiom_examples).replace("END_LINE", "\n \n")[2:-2]
+                             + "_", reply_markup=keyboard)
+        # await Form.delete_idiom.set()
+    # добавить дефисы в начале строк
+
+
+# @dp.message_handler(Text(equals="Delete this idiom from my collection"), state=Form.delete_idiom)
+# async def delete_this_idiom(message: types.Message):
+#     buttons = ["Yes, delete it", "No, back to menu"]
+#     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+#     keyboard.add(*buttons)
+#     await message.answer("Are you sure you want to _get rid of_ this idiom?", reply_markup=keyboard)
+#
+#     @dp.message_handler(state=Form.delete_idiom)
+#     async def confirming_delete(second_message: types.Message):
+#         if second_message.text == "Yes, delete it":
+#             await second_message.answer("Ok, it has been deleted.")
+#         else:
+#             await first_step(second_message)
 
 
 @dp.message_handler(Text(equals="I want to search for an idiom"), state='*')
