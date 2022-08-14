@@ -26,6 +26,7 @@ cursor = connection.cursor()
 class Form(StatesGroup):
     idiom = State()
     user_idiom = State()
+    no_nickname = State()
     # delete_idiom = State()
 
 
@@ -34,10 +35,28 @@ async def start(message: types.Message):
     start_button = ["Ok. Let's begin!"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
     keyboard.add(*start_button)
-    cursor.execute('INSERT OR IGNORE INTO Users (ID) VALUES (:ID)', (message.from_user.username,))
+    if message.from_user.username is not None:
+        cursor.execute('INSERT OR IGNORE INTO Users (ID) VALUES (:ID)', (message.from_user.username,))
+        connection.commit()
+        await Form.idiom.set()
+        await message.answer("Hello, " + "*" + message.from_user.first_name +
+                             "*! 👋 " + bot_messages.start_message, reply_markup=keyboard)
+    else:
+        await Form.no_nickname.set()
+        await message.answer("Hello, " + "*" + message.from_user.first_name +
+                             "*! 👋 " + bot_messages.start_message + bot_messages.no_nickname_message,
+                             reply_markup=types.ReplyKeyboardRemove())
+
+
+@dp.message_handler(state=Form.no_nickname)
+async def no_nickname(message: types.Message):
+    start_button = ["Ok. Let's begin!"]
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    keyboard.add(*start_button)
+    cursor.execute('INSERT OR IGNORE INTO Users (ID) VALUES (:ID)', (message.text,))
     connection.commit()
-    await message.answer("Hello, " + "*" + message.from_user.first_name +
-                         "*! 👋 " + bot_messages.start_message, reply_markup=keyboard)
+    await Form.idiom.set()
+    await message.answer("Fine, I've added it. Now we can learn some idioms!", reply_markup=keyboard)
 
 
 # @dp.message_handler(commands=["reset"])
@@ -50,12 +69,11 @@ async def start(message: types.Message):
 #                          "*! 👋 " + bot_messages.start_message, reply_markup=keyboard)
 
 
-@dp.message_handler(Text(equals="Ok. Let's begin!"), state='*')
+@dp.message_handler(Text(equals="Ok. Let's begin!"), state=Form.idiom)
 async def first_step(message: types.Message):
     start_buttons = ["Give me an idiom", "Show me the idioms I've saved", "I want to search for an idiom"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*start_buttons)
-    await Form.idiom.set()
     # dbworker.set_state(message.chat.id, config.States.S_IDIOM.value)
 
     await message.answer("Are you ready to _dive into_ idioms?", reply_markup=keyboard)
@@ -152,9 +170,9 @@ async def get_idioms_list(message: types.Message):
     for idiom in idioms_list:
         str_idiom = "−" + " " + " ".join(idiom)
         result.append(str_idiom)
-    result.reverse()
+    result.sort(reverse=False)
     await message.answer("*Your idioms are:* \n " + str(result).replace("'", "\n").replace(",", " ") +
-                         "\n \n Do you want me to *remind* you about an idiom or *delete* one of them?",
+                         "\n \n Do you want me to *remind* you about an idiom or start over?",
                          reply_markup=collection_keyboard)
 
 
@@ -177,13 +195,13 @@ async def idiom_reverse(message: types.Message, state: FSMContext):
     cursor.execute('SELECT idiom_examples FROM Idioms WHERE idiom_name = ?', (message.text,))
     user_idiom_examples = [item[0] for item in cursor.fetchall()]
     connection.commit()
-    print(user_idiom)
+    # print(user_idiom)
     if user_idiom == []:
         await message.answer("There is no such idiom in your list. Check your message for typos and write again.")
     else:
         await message.answer("*This idiom means:* \n \n" + "_" +
                              str(user_idiom).replace("END_LINE", "\n \n")[2:-2]
-                             + "_" + "*Here are some examples:* \n \n " + "_" +
+                             + "_" + "*Here are some examples:* \n \n" + "_" +
                              str(user_idiom_examples).replace("END_LINE", "\n \n")[2:-2]
                              + "_", reply_markup=keyboard)
         # await Form.delete_idiom.set()

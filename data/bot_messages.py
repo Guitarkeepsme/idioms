@@ -17,7 +17,7 @@ start_message = "I'll help you to learn new idioms. " + \
                  "\n\n- Нахожу значение и перевод незнакомых слов (*в разработке*); " \
                  "\n\nФункции, находящиеся в разработке, " \
                  "станут доступны в течение нескольких следующих недель. Оставайтесь на связи!" \
-                 "\n\n\n P.S. Остальные сообщения пока не переведены. Если вы нуждаетесь в их переводе, напишите " \
+                 "\n\n\nP.S. Остальные сообщения пока не переведены. Если вы нуждаетесь в их переводе, напишите " \
                  "моему создателю @Dontwait или просто дождитесь реализации четвёртой функции."
 
 commands = ["Ok. Let's begin!", "Give me an idiom", "Show me the idioms I've saved", "I want to search for an idiom",
@@ -26,3 +26,7 @@ commands = ["Ok. Let's begin!", "Give me an idiom", "Show me the idioms I've sav
 
 reminder = "I can remind you about one of the idioms above. Just *type it down here* and I'll send you " + \
             "everything I have."
+
+no_nickname_message = "\n\n\n\n*Oops!* Looks like you do not have a nickname! " \
+                      "That's pity, because I have to recognise you. "\
+                      "Let's make it up, shell we? \n\n Type something that will be identified as your nickname. "
