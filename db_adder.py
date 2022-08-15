@@ -19,5 +19,7 @@ cursor.execute('Create Table if not exists Idiom_collections (User_id TEXT, idio
 connection.commit()
 
 
-cursor.execute('Create Table if not exists Users (ID Text PRIMARY KEY)')
-connection.commit()
+# cursor.execute('DELETE from Idiom_collections')
+# connection.commit()
+
+
