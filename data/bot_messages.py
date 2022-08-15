@@ -30,3 +30,6 @@ reminder = "I can remind you about one of the idioms above. Just *type it down h
 no_nickname_message = "\n\n\n\n*Oops!* Looks like you do not have a nickname! " \
                       "That's pity, because I have to recognise you. "\
                       "Let's make it up, shell we? \n\n Type something that will be identified as your nickname. "
+
+idiom_search_message = "Fine, *type down* an idiom. If you do not remember it correctly, I will send " \
+                       "the closest options."

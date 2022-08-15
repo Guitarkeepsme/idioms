@@ -8,12 +8,13 @@ import random
 import config
 import sqlite3
 from data import bot_messages
+from strsimpy.levenshtein import Levenshtein
 
 
 bot = Bot(token=config.TOKEN, parse_mode="Markdown")
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
-
+levenshtein = Levenshtein()
 
 with open("data/idiom_info_with_id.json", encoding='utf-8', newline='') as file:
     data = json.load(file)
@@ -27,6 +28,7 @@ class Form(StatesGroup):
     idiom = State()
     user_idiom = State()
     no_nickname = State()
+    idiom_search = State()
     # delete_idiom = State()
 
 
@@ -161,17 +163,17 @@ async def idiom_reverse(message: types.Message, state: FSMContext):
     async with state.proxy() as user_idiom_name:
         user_idiom_name['user_idiom'] = message.text
     cursor.execute('SELECT idiom_meaning FROM Idioms WHERE idiom_name = ?', (message.text,))
-    user_idiom = [item[0] for item in cursor.fetchall()]
+    user_idiom_meaning = [item[0] for item in cursor.fetchall()]
     connection.commit()
     cursor.execute('SELECT idiom_examples FROM Idioms WHERE idiom_name = ?', (message.text,))
     user_idiom_examples = [item[0] for item in cursor.fetchall()]
     connection.commit()
     # print(user_idiom)
-    if user_idiom == []:
+    if user_idiom_meaning == []:
         await message.answer("There is no such idiom in your list. Check your message for typos and write again.")
     else:
         await message.answer("*This idiom means:* \n \n" + "_" +
-                             str(user_idiom).replace("END_LINE", "\n \n")[2:-2]
+                             str(user_idiom_meaning).replace("END_LINE", "\n \n")[2:-2]
                              + "_" + "*Here are some examples:* \n \n" + "_" +
                              str(user_idiom_examples).replace("END_LINE", "\n \n")[2:-2]
                              + "_", reply_markup=keyboard)
@@ -195,8 +197,51 @@ async def idiom_reverse(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(Text(equals="I want to search for an idiom"), state='*')
-async def get_idioms_list(message: types.Message):
-    await message.answer("Don't _jump the gun_! This function is being developed.")
+async def idiom_search_message(message: types.Message):
+    await message.answer(bot_messages.idiom_search_message)
+    await Form.idiom_search.set()
+
+
+@dp.message_handler(state=Form.idiom_search)
+async def idiom_search(message: types.message):
+    buttons = ["Back to menu"]
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+    keyboard.add(*buttons)
+    await message.answer("_Get yourself together!_ The function is being developed.", reply_markup=keyboard)
+
+
+# @dp.message_handler(state=Form.idiom_search)
+# async def idiom_search(message: types.Message, state: FSMContext):
+#     buttons = ["Back to menu"]
+#     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+#     keyboard.add(*buttons)
+#     # async with state.proxy() as idiom_search_name:
+#     #     idiom_search_name['idiom_search_name'] = message.text
+#     result = []
+#     for idiom in data:
+#         idiom_counter = []
+#         if levenshtein.distance(idiom, message.text) < 4:
+#             idiom_counter.append(idiom)
+#             cursor.execute('SELECT idiom_meaning FROM Idioms WHERE idiom_name = ?', (idiom,))
+#             idiom_meaning = [item[0] for item in cursor.fetchall()]
+#             connection.commit()
+#             cursor.execute('SELECT idiom_examples FROM Idioms WHERE idiom_name = ?', (idiom,))
+#             idiom_examples = [item[0] for item in cursor.fetchall()]
+#             connection.commit()
+#             await message.answer("I have found the idiom *" + idiom + "*!\n\nThis idiom means: \n\n - "
+#                                  + "_" +
+#                              str(idiom_meaning).replace("END_LINE", "\n \n -")[2:-2]
+#                              + "_" + "*Here are some examples:* \n \n" + "_" +
+#                              str(idiom_examples).replace("END_LINE", "\n \n")[2:-2]
+#                              + "_", reply_markup=keyboard)
+#         else:
+#             continue
+#         if len(idiom_counter) == 0:
+#             await message.answer("I can't find your idiom. Please type it down again and try to be"
+#                                  "more precise.")
+    # cursor.execute("SELECT idiom_name FROM Idioms WHERE idiom_name = ?", (message.text,))
+    # connection.commit()
+    # result = [item[0] for item in cursor.fetchall()]
 
 
 def main():
