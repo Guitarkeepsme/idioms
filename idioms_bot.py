@@ -201,7 +201,10 @@ async def idiom_reverse(message: types.Message, state: FSMContext):
 
 @dp.message_handler(Text(equals="I want to search for an idiom"), state='*')
 async def idiom_search_message(message: types.Message):
-    await message.answer(bot_messages.idiom_search_message)
+    button = ["Back to menu"]
+    keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+    keyboard.add(*button)
+    await message.answer(bot_messages.idiom_search_message, reply_markup=keyboard)
     await Form.idiom_search.set()
 
 
@@ -222,13 +225,16 @@ async def idiom_search(message: types.Message, state: FSMContext):
     right_idiom_counter = 0
     idiom_collection = []
     for idiom in data:
-        if levenshtein.distance(idiom, message.text) > 5:
+        if levenshtein.distance(idiom, message.text) > 4:
             idiom_counter += 1
         else:
             right_idiom_counter += 1
             idiom_collection.append(idiom)
-    if right_idiom_counter != 1:
-        print(idiom_collection)
+    if right_idiom_counter != 1 and idiom_counter != 1387:
+        back_button = ["Back to menu"]
+        back_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        back_keyboard.add(*back_button)
+        # print(idiom_collection)
         result = []
         for idiom in idiom_collection:
             str_idiom = "−" + " " + "".join(idiom)
@@ -236,7 +242,7 @@ async def idiom_search(message: types.Message, state: FSMContext):
         result.sort(reverse=False)
         await message.answer("I have found several idioms. There are: \n" +
                              str(result).replace("'", "\n").replace(",", " ") +
-                             "\n\nPlease choose one of them.")
+                             "\n\nPlease choose one of them.", reply_markup=back_keyboard)
         await Form.idiom_search_2.set()
     elif idiom_counter == 1387:
         await message.answer("There is no such idiom. Please try again and be just a bit more precise.")
@@ -272,7 +278,7 @@ async def confirmation(message: types.Message, state: FSMContext):
                                  str(idiom_meaning).replace("END_LINE", "\n \n ")[2:-3]
                                  + "_" + "*Here are some examples:* \n \n" + "_" +
                                  str(idiom_examples).replace("END_LINE", "\n \n")[2:-2]
-                                 + "_" + "\n\nDo you want to save it or start over?", reply_markup=keyboard)
+                                 + "_" + "\n*Do you want to save it or start over?*", reply_markup=keyboard)
     elif message.text == "No":
         await message.answer("Ok, let's try again.", reply_markup=types.ReplyKeyboardRemove())
         await Form.idiom_search.set()

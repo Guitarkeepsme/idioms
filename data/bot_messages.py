@@ -31,5 +31,5 @@ no_nickname_message = "\n\n\n\n*Oops!* Looks like you do not have a nickname! " 
                       "That's pity, because I have to recognise you. "\
                       "Let's make it up, shell we? \n\n Type something that will be identified as your nickname. "
 
-idiom_search_message = "*Type down* an idiom. If there are several idioms close to your description," \
+idiom_search_message = "*Type down* an idiom. If there are several idioms similar to your description," \
                        " I will print the closest ones."
