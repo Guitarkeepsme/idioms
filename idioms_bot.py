@@ -222,16 +222,15 @@ async def idiom_search(message: types.Message, state: FSMContext):
     buttons = ["Add this idiom to my collection", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
-    idiom_counter = 0  # total amount if idioms in the base is 1387, so we will you this number
     right_idiom_counter = 0
     idiom_collection = []
     for idiom in data:
         if levenshtein.distance(idiom, message.text) > 4:
-            idiom_counter += 1
+            continue
         else:
             right_idiom_counter += 1
             idiom_collection.append(idiom)
-    if right_idiom_counter != 1:
+    if right_idiom_counter > 1:
         back_button = ["Back to menu"]
         back_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
         back_keyboard.add(*back_button)
@@ -245,7 +244,7 @@ async def idiom_search(message: types.Message, state: FSMContext):
                              str(result).replace("'", "\n").replace(",", " ") +
                              "\n\nPlease choose one of them.", reply_markup=back_keyboard)
         await Form.idiom_search_2.set()
-    elif idiom_counter == 1387:
+    elif right_idiom_counter == 0:
         await message.answer("There is no such idiom. Please try again and be just a bit more precise.")
     else:
         conf_buttons = ["Yes", "No", "Back to menu"]
