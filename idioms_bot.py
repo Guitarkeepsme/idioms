@@ -147,6 +147,7 @@ async def get_idioms_list(message: types.Message):
         str_idiom = "−" + " " + " ".join(idiom)
         result.append(str_idiom)
     result.sort(reverse=False)
+    await Form.idiom.set()
     await message.answer("*Your idioms are:* \n " + str(result).replace("'", "\n").replace(",", " ") +
                          "\n \n Do you want me to *remind* you about an idiom or start over?",
                          reply_markup=keyboard)
@@ -230,7 +231,7 @@ async def idiom_search(message: types.Message, state: FSMContext):
         else:
             right_idiom_counter += 1
             idiom_collection.append(idiom)
-    if right_idiom_counter != 1 and idiom_counter != 1387:
+    if right_idiom_counter != 1:
         back_button = ["Back to menu"]
         back_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
         back_keyboard.add(*back_button)
@@ -287,13 +288,14 @@ async def confirmation(message: types.Message, state: FSMContext):
 
 @dp.message_handler(state=Form.idiom_search_2)
 async def picking_idiom(message: types.Message, state: FSMContext):
+    lower_message = message.text.lower()
     buttons = ["Add this idiom to my collection", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
-    cursor.execute('SELECT idiom_meaning FROM Idioms WHERE idiom_name = ?', (message.text,))
+    cursor.execute('SELECT idiom_meaning FROM Idioms WHERE idiom_name = ?', (lower_message,))
     idiom_meaning = [item[0] for item in cursor.fetchall()]
     connection.commit()
-    cursor.execute('SELECT idiom_examples FROM Idioms WHERE idiom_name = ?', (message.text,))
+    cursor.execute('SELECT idiom_examples FROM Idioms WHERE idiom_name = ?', (lower_message,))
     idiom_examples = [item[0] for item in cursor.fetchall()]
     connection.commit()
     if idiom_meaning == []:
@@ -336,4 +338,4 @@ if __name__ == "__main__":
     main()
 
 
-#  логирование, трейсинг
+#  логирование, трейсинг, ttd
