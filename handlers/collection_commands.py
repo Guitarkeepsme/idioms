@@ -4,7 +4,14 @@ from aiogram.dispatcher.filters import Text
 
 from data import bot_messages
 from data.config import Form, cursor, connection
+from handlers.random_idiom_commands import first_step
 from loader import dp
+
+
+@dp.message_handler(Text(equals="Back to menu"), state='*')
+async def go_back(message: types.Message):
+    await Form.idiom.set()
+    await first_step(message)
 
 
 @dp.message_handler(Text(equals="Add this idiom to my collection"), state=Form.idiom)
