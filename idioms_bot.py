@@ -3,10 +3,14 @@ from aiogram.dispatcher.filters import Text
 from aiogram.contrib.fsm_storage.memory import MemoryStorage
 from aiogram.dispatcher.filters.state import State, StatesGroup
 from aiogram.dispatcher import FSMContext
+
+from googletrans import Translator
+
 import json
 import random
 import config
 import sqlite3
+
 from data import bot_messages
 from strsimpy.levenshtein import Levenshtein
 
@@ -26,12 +30,21 @@ cursor = connection.cursor()
 
 class Form(StatesGroup):
     idiom = State()
+    translation_idiom = State()
     user_idiom = State()
+    translation_user_idiom = State()
     idiom_search = State()
-    idiom_search_2 = State()
-    idiom_search_3 = State()
+    translation_idiom_user = State()
+    translation_idiom_confirmed = State()
+    translation_search = State()
+    translation_idiom_from_several = State()
+    idiom_search_several = State()
+    idiom_search_adding = State()
     confirmation = State()
     # delete_idiom = State()
+
+
+translator = Translator()
 
 
 @dp.message_handler(commands="start", state='*')
@@ -57,11 +70,9 @@ async def first_step(message: types.Message):
 
 @dp.message_handler(Text(equals="Give me an idiom"), state=Form.idiom)
 async def get_idiom_name(message: types.Message, state: FSMContext):
-    buttons = ["No. What does it mean?", "I've seen it. Give me another one", "Back to menu"]
+    buttons = ["No. What does it mean?", "I've seen it. Give me another one", "Translate something", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
-    await message.answer("Just a moment. I'm trying to _beat the clock_...")
-
     random_index = random.randint(0, len(list(data)) - 1)
     in_d = list(data.items())[random_index]
 
@@ -75,7 +86,7 @@ async def get_idiom_name(message: types.Message, state: FSMContext):
 
 @dp.message_handler(Text(equals="No. What does it mean?"), state=Form.idiom)
 async def get_idiom_meanings(message: types.Message, state: FSMContext):
-    buttons = ["Show me some examples", "I've seen it. Give me another one", "Back to menu"]
+    buttons = ["Show me some examples", "I've seen it. Give me another one", "Translate something", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
     async with state.proxy() as current_idiom:
@@ -87,7 +98,8 @@ async def get_idiom_meanings(message: types.Message, state: FSMContext):
 
 @dp.message_handler(Text(equals="Show me some examples"), state=Form.idiom)
 async def get_idiom_examples(third_message: types.Message, state: FSMContext):
-    buttons = ["Add this idiom to my collection", "I've seen it. Give me another one", "Back to menu"]
+    buttons = ["Add this idiom to my collection", "I've seen it. Give me another one", "Translate something",
+               "Back to menu"]
     second_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     async with state.proxy() as current_idiom:
         examples = current_idiom['idiom'][1].get("idiom_examples")
@@ -100,14 +112,14 @@ async def get_idiom_examples(third_message: types.Message, state: FSMContext):
 
 @dp.message_handler(lambda message: message.text not in bot_messages.commands, state=Form.idiom)
 async def invalid_message(message: types.Message):
-    return await message.reply("Later you will be able to search for this. "
-                               "But for now, please provide one of current commands. \n\n"
-                               "If you wanted to *remind you about an idiom*, click the keyboard button first.")
+    # translated = translator.translate(message.text, dest='ru')
+    # await message.reply("That means \n\n" + "_" + translated.text + "_")
+    return await message.reply("I don't know what you mean. Please check current commands.")
 
 
 @dp.message_handler(Text(equals="Add this idiom to my collection"), state=Form.idiom)
 async def update_collection(message: types.Message, state: FSMContext):
-    buttons = ["Show me the idioms I've saved", "Back to menu"]
+    buttons = ["Show me the idioms I've saved", "Translate something", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
     async with state.proxy() as current_idiom:
@@ -133,9 +145,22 @@ async def go_back(message: types.Message):
     await first_step(message)
 
 
+@dp.message_handler(Text(equals="Translate something"), state=Form.idiom)
+async def translate_something(message: types.Message):
+    await Form.translation_idiom.set()
+    await message.reply("Что вы хотите перевести? Скопируйте и отправьте нужный текст *ответным сообщением*.")
+
+
+@dp.message_handler(state=Form.translation_idiom)
+async def text_to_translate_idiom(message: types.Message, state: FSMContext):
+    translated = translator.translate(message.text, dest='ru')
+    await message.reply("*Перевод:* \n\n" + "_" + translated.text + "_")
+    await Form.idiom.set()
+
+
 @dp.message_handler(Text(equals="Show me the idioms I've saved"), state='*')
 async def get_idioms_list(message: types.Message):
-    buttons = ["Remind me about an idiom...", "Back to menu"]
+    buttons = ["Remind me about an idiom...", "Translate something", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
     cursor.execute('SELECT idiom_name FROM Idioms WHERE idiom_id in'
@@ -153,15 +178,28 @@ async def get_idioms_list(message: types.Message):
                          reply_markup=keyboard)
 
 
+@dp.message_handler(Text(equals="Translate something"), state=Form.user_idiom)
+async def translate_something_user(message: types.Message):
+    await Form.translation_idiom_user.set()
+    await message.reply("Что вы хотите перевести? Скопируйте и отправьте нужный текст *ответным сообщением*.")
+
+
+@dp.message_handler(state=Form.translation_idiom_user)
+async def text_to_translate_user(message: types.Message, state: FSMContext):
+    translated = translator.translate(message.text, dest='ru')
+    await message.reply("*Перевод:* \n\n" + "_" + translated.text + "_")
+    await Form.user_idiom.set()
+
+
 @dp.message_handler(Text(equals="Remind me about an idiom..."), state=Form.idiom)
 async def reminder_message(message: types.Message):
-    await message.answer(bot_messages.reminder)
+    await message.answer(bot_messages.reminder, reply_markup=types.ReplyKeyboardRemove())
     await Form.user_idiom.set()
 
 
 @dp.message_handler(state=Form.user_idiom)
 async def idiom_reverse(message: types.Message, state: FSMContext):
-    buttons = ["Show me the idioms I've saved", "Back to menu"]
+    buttons = ["Show me the idioms I've saved", "Translate something", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
     async with state.proxy() as user_idiom_name:
@@ -209,6 +247,7 @@ async def idiom_search_message(message: types.Message):
     await Form.idiom_search.set()
 
 
+
 # @dp.message_handler(state=Form.idiom_search)
 # async def idiom_search(message: types.message):
 #     buttons = ["Back to menu"]
@@ -219,7 +258,7 @@ async def idiom_search_message(message: types.Message):
 
 @dp.message_handler(state=Form.idiom_search)
 async def idiom_search(message: types.Message, state: FSMContext):
-    buttons = ["Add this idiom to my collection", "Back to menu"]
+    buttons = ["Add this idiom to my collection", "Translate something", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
     right_idiom_counter = 0
@@ -243,7 +282,7 @@ async def idiom_search(message: types.Message, state: FSMContext):
         await message.answer("I have found several idioms. There are: \n" +
                              str(result).replace("'", "\n").replace(",", " ") +
                              "\n\nPlease choose one of them.", reply_markup=back_keyboard)
-        await Form.idiom_search_2.set()
+        await Form.idiom_search_several.set()
     elif right_idiom_counter == 0:
         await message.answer("There is no such idiom. Please try again and be just a bit more precise.")
     else:
@@ -258,10 +297,23 @@ async def idiom_search(message: types.Message, state: FSMContext):
         await message.answer("Did you mean the idiom * " + idiom_collection[0] + "?*", reply_markup=conf_keyboard)
 
 
+@dp.message_handler(Text(equals="Translate something"), state=Form.confirmation)
+async def translate_something_confirmation(message: types.Message):
+    await Form.translation_idiom_confirmed.set()
+    await message.reply("Что вы хотите перевести? Скопируйте и отправьте нужный текст *ответным сообщением*.")
+
+
+@dp.message_handler(state=Form.translation_idiom_confirmed)
+async def text_to_translate_confirmation(message: types.Message, state: FSMContext):
+    translated = translator.translate(message.text, dest='ru')
+    await message.reply("*Перевод:* \n\n" + "_" + translated.text + "_")
+    await Form.confirmation.set()
+
+
 @dp.message_handler(state=Form.confirmation)
 async def confirmation(message: types.Message, state: FSMContext):
     if message.text == "Yes":
-        buttons = ["Add this idiom to my collection", "Back to menu"]
+        buttons = ["Add this idiom to my collection", "Translate something", "Back to menu"]
         keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
         keyboard.add(*buttons)
         async with state.proxy() as searched_idiom:
@@ -272,7 +324,7 @@ async def confirmation(message: types.Message, state: FSMContext):
             cursor.execute('SELECT idiom_examples FROM Idioms WHERE idiom_name = ?', (idiom_name,))
             idiom_examples = [item[0] for item in cursor.fetchall()]
             connection.commit()
-            await Form.idiom_search_3.set()
+            await Form.idiom_search_adding.set()
             await message.answer("Ok, the idiom *" + idiom_name + "* means:\n\n "
                                  + "_" +
                                  str(idiom_meaning).replace("END_LINE", "\n \n ")[2:-3]
@@ -285,10 +337,23 @@ async def confirmation(message: types.Message, state: FSMContext):
         await idiom_search_message(message)
 
 
-@dp.message_handler(state=Form.idiom_search_2)
+@dp.message_handler(Text(equals="Translate something"), state=Form.idiom_search_adding)
+async def translate_something_confirmation(message: types.Message):
+    await Form.translation_idiom_from_several.set()
+    await message.reply("Что вы хотите перевести? Скопируйте и отправьте нужный текст *ответным сообщением*.")
+
+
+@dp.message_handler(state=Form.translation_idiom_from_several)
+async def text_to_translate_search(message: types.Message, state: FSMContext):
+    translated = translator.translate(message.text, dest='ru')
+    await message.reply("*Перевод:* \n\n" + "_" + translated.text + "_")
+    await Form.idiom_search_adding.set()
+
+
+@dp.message_handler(state=Form.idiom_search_several)
 async def picking_idiom(message: types.Message, state: FSMContext):
     lower_message = message.text.lower()
-    buttons = ["Add this idiom to my collection", "Back to menu"]
+    buttons = ["Add this idiom to my collection", "Translate something", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
     cursor.execute('SELECT idiom_meaning FROM Idioms WHERE idiom_name = ?', (lower_message,))
@@ -300,7 +365,7 @@ async def picking_idiom(message: types.Message, state: FSMContext):
     if idiom_meaning == []:
         await message.answer("Make sure you didn't make any typos and try again.")
     else:
-        await Form.idiom_search_3.set()
+        await Form.idiom_search_adding.set()
 
         async with state.proxy() as searched_idiom:
             searched_idiom["searched_idiom"] = message.text
@@ -313,9 +378,9 @@ async def picking_idiom(message: types.Message, state: FSMContext):
                          + "_", reply_markup=keyboard)
 
 
-@dp.message_handler(Text(equals="Add this idiom to my collection"), state=Form.idiom_search_3)
+@dp.message_handler(Text(equals="Add this idiom to my collection"), state=Form.idiom_search_adding)
 async def update_collection_after_search(message: types.Message, state: FSMContext):
-    buttons = ["Show me the idioms I've saved", "Back to menu"]
+    buttons = ["Show me the idioms I've saved", "Translate something", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
     async with state.proxy() as searched_idiom:
@@ -329,8 +394,28 @@ async def update_collection_after_search(message: types.Message, state: FSMConte
                              reply_markup=keyboard)
 
 
+# @dp.message_handler(Text(equals="Translate something"), state='*')
+# async def translate_something(message: types.Message, state: FSMContext):
+#     await message.reply("_Hold your horses!_ The function is being developed.")
+#     # await Form.translation.set()
+#     # translated = translator.translate(message.text, dest='ru')
+#     # await message.reply("That means \n\n" + "_" + translated.text + "_")
+
+
+# @dp.message_handler(state=Form.translation)
+# async def text_to_translate_in_user_section(message: types.Message):
+#     translated = translator.translate(message.text, dest='ru')
+#     await message.reply("That means \n\n" + "_" + translated.text + "_")
+#     await Form.user_idiom.set()
+
+
+async def shutdown(dispatcher: Dispatcher):
+    await dispatcher.storage.close()
+    await dispatcher.storage.wait_closed()
+
+
 def main():
-    executor.start_polling(dp)
+    executor.start_polling(dp, on_shutdown=shutdown)
 
 
 if __name__ == "__main__":
