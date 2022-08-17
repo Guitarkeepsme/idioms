@@ -68,7 +68,7 @@ for link in all_links_set:
         }
     # print(idiom_content)
 
-    with open("data/idiom_info.json", "w") as file:
+    with open("drafts/idiom_info.json", "w") as file:
         json.dump(idiom_content, file, indent=4, ensure_ascii=False)
 
     info_iteration_count -= 1

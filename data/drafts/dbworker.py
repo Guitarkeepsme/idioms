@@ -1,5 +1,5 @@
 from vedis import Vedis
-import config
+from data import config
 
 
 # Пытаемся узнать из базы «состояние» пользователя
