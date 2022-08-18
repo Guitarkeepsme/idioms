@@ -19,7 +19,8 @@ start_message = "I'll help you to learn new idioms. " + \
 
 commands = ["Ok. Let's begin!", "Give me an idiom", "Show me the idioms I've saved", "I want to search for an idiom",
             "No. What does it mean?", "Show me some examples", "I've seen it. Give me another one", "Back to menu",
-            "Add this idiom to my collection", "Remind me about an idiom...", '/start', '/help', '/reset',
+            "Add this idiom to my collection", "Remind me about an idiom",
+            "Delete an idiom from my collection", "Delete another one", '/start', '/help', '/reset',
             "Translate something"]
 
 reminder = "I can remind you about one of the idioms above. Just *type it down here* and I'll send you " + \

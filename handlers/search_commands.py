@@ -14,7 +14,7 @@ async def go_back(message: types.Message):
     await first_step(message)
 
 
-@dp.message_handler(Text(equals="I want to search for an idiom"), state='*')
+@dp.message_handler(Text(equals="I want to search for an idiom"), state=Form.idiom)
 async def idiom_search_message(message: types.Message):
     button = ["Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
@@ -37,9 +37,9 @@ async def idiom_search(message: types.Message, state: FSMContext):
             right_idiom_counter += 1
             idiom_collection.append(idiom)
     if right_idiom_counter > 1:
-        back_button = ["Back to menu"]
-        back_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True)
-        back_keyboard.add(*back_button)
+        new_search_buttons = ["Back to menu"]
+        new_search_keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        new_search_keyboard.add(*new_search_buttons)
         # print(idiom_collection)
         result = []
         for idiom in idiom_collection:
@@ -48,7 +48,7 @@ async def idiom_search(message: types.Message, state: FSMContext):
         result.sort(reverse=False)
         await message.answer("I have found several idioms. There are: \n" +
                              str(result).replace("'", "\n").replace(",", " ") +
-                             "\n\nPlease choose one of them.", reply_markup=back_keyboard)
+                             "\n\nPlease choose one of them.", reply_markup=new_search_keyboard)
         await Form.idiom_search_several.set()
     elif right_idiom_counter == 0:
         await message.answer("There is no such idiom. Please try again and be just a bit more precise.")
@@ -89,6 +89,13 @@ async def confirmation(message: types.Message, state: FSMContext):
         await message.answer("Ok, let's try again.", reply_markup=types.ReplyKeyboardRemove())
         await Form.idiom_search.set()
         await idiom_search_message(message)
+    else:
+        await message.answer("Please choose one of the current options.")
+
+
+# @dp.message_handler(Text(equals="There is no my idiom. Try again"), state=Form.idiom_search)
+# async def new_search(message: types.Message, state: FSMContext):
+#     await idiom_search(message, state)
 
 
 @dp.message_handler(state=Form.idiom_search_several)

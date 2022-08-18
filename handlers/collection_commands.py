@@ -31,8 +31,9 @@ async def update_collection(message: types.Message, state: FSMContext):
 
 
 @dp.message_handler(Text(equals="Show me the idioms I've saved"), state='*')
-async def get_idioms_list(message: types.Message):
-    buttons = ["Remind me about an idiom...", "Translate something", "Back to menu"]
+async def get_idioms_list(message: types.Message, state: FSMContext):
+    buttons = ["Remind me about an idiom", "Delete an idiom from my collection",
+               "Translate something", "Back to menu"]
     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
     keyboard.add(*buttons)
     cursor.execute('SELECT idiom_name FROM Idioms WHERE idiom_id in'
@@ -44,13 +45,17 @@ async def get_idioms_list(message: types.Message):
         str_idiom = "−" + " " + " ".join(idiom)
         result.append(str_idiom)
     result.sort(reverse=False)
+
+    async with state.proxy() as user_collection:
+        user_collection["user_collection"] = result
+
     await Form.idiom.set()
     await message.answer("*Your idioms are:* \n " + str(result).replace("'", "\n").replace(",", " ") +
                          "\n \n Do you want me to *remind* you about an idiom or start over?",
                          reply_markup=keyboard)
 
 
-@dp.message_handler(Text(equals="Remind me about an idiom..."), state=Form.idiom)
+@dp.message_handler(Text(equals="Remind me about an idiom"), state=Form.idiom)
 async def reminder_message(message: types.Message):
     await message.answer(bot_messages.reminder, reply_markup=types.ReplyKeyboardRemove())
     await Form.user_idiom.set()
@@ -78,16 +83,34 @@ async def idiom_reverse(message: types.Message, state: FSMContext):
                              str(user_idiom_examples).replace("END_LINE", "\n \n")[2:-2]
                              + "_", reply_markup=keyboard)
 
-# @dp.message_handler(Text(equals="Delete this idiom from my collection"), state=Form.delete_idiom)
-# async def delete_this_idiom(message: types.Message):
-#     buttons = ["Yes, delete it", "No, back to menu"]
-#     keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
-#     keyboard.add(*buttons)
-#     await message.answer("Are you sure you want to _get rid of_ this idiom?", reply_markup=keyboard)
-#
-#     @dp.message_handler(state=Form.delete_idiom)
-#     async def confirming_delete(second_message: types.Message):
-#         if second_message.text == "Yes, delete it":
-#             await second_message.answer("Ok, it has been deleted.")
-#         else:
-#             await first_step(second_message)
+
+@dp.message_handler(Text(equals="Delete an idiom from my collection"), state=Form.idiom)
+async def delete_an_idiom(message: types.Message):
+    await message.answer("Which idiom do you want to be deleted? Type it down.")
+    await Form.delete_idiom.set()
+
+    @dp.message_handler(state=Form.delete_idiom)
+    async def choose_to_delete(second_message: types.Message, state: FSMContext):
+        buttons = ["Delete another one", "Show me the idioms I've saved", "Back to menu"]
+        keyboard = types.ReplyKeyboardMarkup(resize_keyboard=True, row_width=1)
+        keyboard.add(*buttons)
+        async with state.proxy() as user_collection:
+            idiom_list = user_collection["user_collection"]
+            corrected_message = "− " + str(second_message.text)
+            if corrected_message not in idiom_list:
+                await second_message.answer("There is no such idiom. Please try again.")
+            else:
+                await Form.idiom.set()
+                cursor.execute("DELETE from Idiom_collections WHERE user_id = ? "
+                               "AND idiom_id in (SELECT idiom_id FROM Idioms WHERE idiom_name = ?)",
+                               (message.from_user.id, second_message.text,))
+                await second_message.answer("Ok, the idiom *"
+                                            + str(second_message.text) +
+                                            "* has been removed. "
+                                            "\n\nDo you want do delete another one or go back?"
+                                            "\n\n_This function is being developed, hold on_", reply_markup=keyboard)
+
+                @dp.message_handler(Text(equals="Delete another one"), state=Form.idiom)
+                async def another_deletion(another_message: types.Message):
+                    await delete_an_idiom(another_message)
+
