@@ -31,8 +31,8 @@ async def get_idiom_name(message: types.Message, state: FSMContext):
         current_idiom['idiom'] = in_d
 
     name = in_d[1].get("idiom_name")
-    await message.answer("The idiom is " + "*" + str(name) + "*. "
-                         + "Have you already seen this one?", reply_markup=keyboard)
+    await message.answer("*" + str(name) + "*\n\n"
+                         + "Have you already seen this idiom?", reply_markup=keyboard)
 
 
 @dp.message_handler(Text(equals="No. What does it mean?"), state=Form.idiom)
